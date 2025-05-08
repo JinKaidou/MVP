@@ -1,8 +1,6 @@
 // lib/screens/chat_screen.dart
 import 'package:flutter/material.dart';
 import '../services/ai_service.dart';
-import '../widgets/chat_bubble.dart';
-import '../widgets/chat_input.dart';
 import 'map_screen.dart';
 
 class Message {
@@ -23,26 +21,35 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final AIService _aiService = AIService();
   final List<Message> _messages = [];
+  final TextEditingController _controller = TextEditingController();
   bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
     _addBotMessage(
-      "Hi there! I'm your campus guide AI. You can ask me anything about the campus, or tap the map button to view the campus map.",
+      "Hi there! I'm your campus guide AI. You can ask me anything about the campus.",
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text(
-          'CampusGuide AI',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.white,
         elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: const Text('Chat', style: TextStyle(color: Colors.black)),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search, color: Colors.black),
+            onPressed: () {},
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -56,15 +63,10 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                     )
                     : ListView.builder(
-                      reverse: true,
+                      padding: const EdgeInsets.all(16),
                       itemCount: _messages.length,
                       itemBuilder: (context, index) {
-                        final message = _messages[_messages.length - 1 - index];
-                        return ChatBubble(
-                          message: message.text,
-                          isUser: message.isUser,
-                          timestamp: message.timestamp,
-                        );
+                        return _buildMessageRow(_messages[index]);
                       },
                     ),
           ),
@@ -92,18 +94,108 @@ class _ChatScreenState extends State<ChatScreen> {
                 ],
               ),
             ),
-          // Chat input with action buttons
-          ChatInput(
-            onSend: _handleSendMessage,
-            onMapRequested: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const MapScreen()),
-              );
-            },
-            onAskToEdit: () {
-              _handleSendMessage("Can you help me edit a document?");
-            },
+          // Input area
+          _buildInputArea(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMessageRow(Message message) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: Row(
+        mainAxisAlignment:
+            message.isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (!message.isUser) _buildAvatar(isUser: false),
+          const SizedBox(width: 8),
+          Flexible(
+            child: Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color:
+                    message.isUser
+                        ? const Color(0xFF2D7CFF)
+                        : const Color(0xFFE8F1FF),
+                borderRadius: BorderRadius.circular(18),
+              ),
+              child: Text(
+                message.text,
+                style: TextStyle(
+                  color: message.isUser ? Colors.white : Colors.black87,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          if (message.isUser) _buildAvatar(isUser: true),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAvatar({required bool isUser}) {
+    return CircleAvatar(
+      radius: 16,
+      backgroundColor: isUser ? Colors.blue : Colors.lightBlue,
+      child: Icon(
+        isUser ? Icons.person : Icons.school,
+        color: Colors.white,
+        size: 16,
+      ),
+    );
+  }
+
+  Widget _buildInputArea() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(top: BorderSide(color: Colors.grey.shade200)),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade100,
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: TextField(
+                controller: _controller,
+                decoration: const InputDecoration(
+                  hintText: 'Type a message...',
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(vertical: 10),
+                ),
+                onSubmitted: (text) {
+                  if (text.trim().isNotEmpty) {
+                    _handleSendMessage(text);
+                    _controller.clear();
+                  }
+                },
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Container(
+            decoration: const BoxDecoration(
+              color: Colors.blue,
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(
+              icon: const Icon(Icons.send, color: Colors.white, size: 18),
+              onPressed: () {
+                if (_controller.text.trim().isNotEmpty) {
+                  _handleSendMessage(_controller.text);
+                  _controller.clear();
+                }
+              },
+            ),
           ),
         ],
       ),
@@ -131,6 +223,21 @@ class _ChatScreenState extends State<ChatScreen> {
       _addBotMessage(
         "I can show you the campus map. Would you like to see it?",
       );
+
+      // Show map button after a short delay
+      Future.delayed(const Duration(milliseconds: 800), () {
+        setState(() {
+          _addBotMessage("Tap here to view the map");
+
+          // Navigate to map after user taps on message
+          Future.delayed(const Duration(seconds: 1), () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const MapScreen()),
+            );
+          });
+        });
+      });
       return;
     }
 

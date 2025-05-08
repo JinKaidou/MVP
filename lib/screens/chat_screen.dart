@@ -252,7 +252,7 @@ class _ChatScreenState extends State<ChatScreen> {
       // Show map button after a short delay
       Future.delayed(const Duration(milliseconds: 800), () {
         setState(() {
-          _addBotMessage("Tap here to view the map");
+          _addBotMessage("Here's the map");
 
           // Navigate to map after user taps on message
           Future.delayed(const Duration(seconds: 1), () {

@@ -12,7 +12,7 @@ class MapScreen extends StatelessWidget {
           'Campus Map',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.blue,
+        backgroundColor: const Color(0xFF2D7CFF),
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -26,7 +26,28 @@ class MapScreen extends StatelessWidget {
           minScale: 0.5,
           maxScale: 4.0,
           child: Center(
-            child: Image.asset('assets/images/USTP.png', fit: BoxFit.contain),
+            child: Image.asset(
+              'assets/images/USTP.png',
+              fit: BoxFit.contain,
+              errorBuilder: (context, error, stackTrace) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.error_outline,
+                      color: Colors.red,
+                      size: 48,
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Error loading map: ${error.toString()}',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(color: Colors.red),
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ),

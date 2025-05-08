@@ -1,6 +1,6 @@
 // lib/widgets/chat_input.dart
 import 'package:flutter/material.dart';
-import 'chat_button.dart';
+import 'action_button.dart';
 
 class ChatInput extends StatefulWidget {
   final Function(String) onSend;

@@ -26,10 +26,7 @@ class MapScreen extends StatelessWidget {
           minScale: 0.5,
           maxScale: 4.0,
           child: Center(
-            child: Image.asset(
-              'assets/images/school_map.png',
-              fit: BoxFit.contain,
-            ),
+            child: Image.asset('assets/images/USTP.png', fit: BoxFit.contain),
           ),
         ),
       ),

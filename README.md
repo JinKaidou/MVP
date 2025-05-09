@@ -1,4 +1,4 @@
-# fluttercampusguideai
+# Campus Guide AI
 
 A new Flutter project.
 

@@ -1,0 +1,15 @@
+icons_launcher:
+  image_path: "assets/icon/CGAI_logo.png"
+  platforms:
+    android:
+      enable: true
+    ios:
+      enable: false
+    web:
+      enable: true
+    macos:
+      enable: false
+    windows:
+      enable: false
+    linux:
+      enable: false

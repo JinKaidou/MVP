@@ -1,6 +1,6 @@
-# Campus Guide AI
+# fluttercampusguideai
 
-A new Flutter project.
+An AbatuComp Project / CampusGuide AI
 
 ## Getting Started
 

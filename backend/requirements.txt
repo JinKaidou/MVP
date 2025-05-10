@@ -1,0 +1,11 @@
+fastapi==0.95.1
+uvicorn[standard]==0.22.0
+langchain==0.0.289
+pypdfium2==4.19.0
+sentence-transformers==2.2.2
+transformers==4.30.2
+faiss-cpu==1.7.4
+python-dotenv==1.0.0
+python-multipart==0.0.6
+tenacity==8.2.2
+numpy==1.23.5 

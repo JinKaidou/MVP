@@ -8,7 +8,7 @@ class AIService {
   // Dynamic base URL that works for different platforms
   String get baseUrl {
     if (kIsWeb) {
-      return 'http://127.0.0.1:5000/api'; // Using IP instead of localhost
+      return 'http://127.0.0.1:8000/api'; // Changed port from 5000 to 8000
     } else if (Platform.isAndroid) {
       // For Android emulator or physical device testing
       const bool useLocalEmulator = true; // Change to false for production

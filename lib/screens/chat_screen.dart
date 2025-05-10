@@ -60,29 +60,28 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Column(
           children: [
             Expanded(
-              child:
-                  _messages.isEmpty
-                      ? const Center(
-                        child: Text(
-                          'Send a message to start chatting',
-                          style: TextStyle(color: Colors.white70),
-                        ),
-                      )
-                      : ListView.builder(
-                        padding: const EdgeInsets.all(16),
-                        itemCount: _messages.length,
-                        itemBuilder: (context, index) {
-                          return _buildMessageRow(_messages[index]);
-                        },
+              child: _messages.isEmpty
+                  ? const Center(
+                      child: Text(
+                        'Send a message to start chatting',
+                        style: TextStyle(color: Colors.white70),
                       ),
+                    )
+                  : ListView.builder(
+                      padding: const EdgeInsets.all(16),
+                      itemCount: _messages.length,
+                      itemBuilder: (context, index) {
+                        return _buildMessageRow(_messages[index]);
+                      },
+                    ),
             ),
             if (_isLoading)
               Container(
                 padding: const EdgeInsets.all(8.0),
                 alignment: Alignment.centerLeft,
-                child: Row(
+                child: const Row(
                   children: [
-                    const SizedBox(width: 16),
+                    SizedBox(width: 16),
                     SizedBox(
                       width: 20,
                       height: 20,
@@ -91,7 +90,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     Text(
                       "Typing...",
                       style: TextStyle(color: Colors.white70, fontSize: 12),
@@ -120,10 +119,9 @@ class _ChatScreenState extends State<ChatScreen> {
             child: Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color:
-                    message.isUser
-                        ? const Color(0xFF2D7CFF)
-                        : Colors.white.withOpacity(0.85),
+                color: message.isUser
+                    ? const Color(0xFF2D7CFF)
+                    : Colors.white.withOpacity(0.85),
                 borderRadius: BorderRadius.only(
                   topLeft: const Radius.circular(22),
                   topRight: const Radius.circular(22),

@@ -7,7 +7,7 @@ class AppTheme {
     return ThemeData(
       primaryColor: AppColors.primaryBlue,
       scaffoldBackgroundColor: AppColors.backgroundColor,
-      colorScheme: ColorScheme.light(
+      colorScheme: const ColorScheme.light(
         primary: AppColors.primaryBlue,
         secondary: AppColors.secondaryBlue,
         error: AppColors.errorRed,

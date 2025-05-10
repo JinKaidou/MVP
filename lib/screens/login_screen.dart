@@ -59,7 +59,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.person),
                   hintText: 'Username',
-                  border: OutlineInputBorder(),
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
                 ),
               ),
               const SizedBox(height: 16),
@@ -71,7 +72,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.lock),
                   hintText: 'Password',
-                  border: OutlineInputBorder(),
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
                 ),
               ),
 
@@ -118,10 +120,23 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ChatScreen(),
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder:
+                            (context, animation, secondaryAnimation) =>
+                                const ChatScreen(),
+                        transitionsBuilder: (
+                          context,
+                          animation,
+                          secondaryAnimation,
+                          child,
+                        ) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          );
+                        },
+                        transitionDuration: const Duration(milliseconds: 300),
                       ),
                     );
                   },

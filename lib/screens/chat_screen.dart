@@ -23,6 +23,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final List<Message> _messages = [];
   final TextEditingController _controller = TextEditingController();
   bool _isLoading = false;
+  final List<String> _previousPrompts = [];
 
   @override
   void initState() {
@@ -36,12 +37,79 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
+      drawer: Drawer(
+        width: 180, // Thin sidebar
+        backgroundColor: Colors.grey.shade200.withOpacity(0.85),
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.grey.shade200.withOpacity(0.5),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('assets/icon/CGAI_logo.png', height: 48),
+                  const SizedBox(height: 12),
+                  const Text(
+                    'CampusGuideAI',
+                    style: TextStyle(
+                      color: Colors.black54,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.1,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            if (_previousPrompts.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 4,
+                ),
+                child: Text(
+                  'Previous Prompts',
+                  style: TextStyle(
+                    color: Colors.black.withOpacity(0.6),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ..._previousPrompts.map(
+              (prompt) => ListTile(
+                title: Text(
+                  prompt,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 14),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  setState(() {
+                    _controller.text = prompt;
+                    _controller.selection = TextSelection.fromPosition(
+                      TextPosition(offset: _controller.text.length),
+                    );
+                  });
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
       appBar: AppBar(
         backgroundColor: const Color(0xFF2D7CFF),
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
+        leading: Builder(
+          builder:
+              (context) => IconButton(
+                icon: const Icon(Icons.menu, color: Colors.white),
+                onPressed: () => Scaffold.of(context).openDrawer(),
+              ),
         ),
         title: const Text(
           'CampusGuide AI',
@@ -191,6 +259,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 decoration: const InputDecoration(
                   hintText: 'Type a message...',
                   border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
                   contentPadding: EdgeInsets.symmetric(vertical: 10),
                 ),
                 onSubmitted: (text) {
@@ -241,6 +310,14 @@ class _ChatScreenState extends State<ChatScreen> {
     // Add user message
     _addMessage(Message(text: text, isUser: true, timestamp: DateTime.now()));
 
+    if (text.trim().isNotEmpty &&
+        (_previousPrompts.isEmpty || _previousPrompts.first != text.trim())) {
+      setState(() {
+        _previousPrompts.insert(0, text.trim());
+        if (_previousPrompts.length > 20) _previousPrompts.removeLast();
+      });
+    }
+
     // Handle map-related queries directly to improve response time
     if (text.toLowerCase().contains('map') ||
         text.toLowerCase().contains('location') ||
@@ -249,19 +326,23 @@ class _ChatScreenState extends State<ChatScreen> {
         "I can show you the campus map. Would you like to see it?",
       );
 
-      // Show map button after a short delay
-      Future.delayed(const Duration(milliseconds: 800), () {
-        setState(() {
-          _addBotMessage("Here's the map");
-
-          // Navigate to map after user taps on message
-          Future.delayed(const Duration(seconds: 1), () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const MapScreen()),
-            );
-          });
-        });
+      // Show map as a modal bottom sheet after user triggers map
+      Future.delayed(const Duration(seconds: 1), () {
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          backgroundColor: Colors.transparent,
+          builder:
+              (context) => FractionallySizedBox(
+                heightFactor: 0.92,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(24),
+                  ),
+                  child: MapScreen(),
+                ),
+              ),
+        );
       });
       return;
     }

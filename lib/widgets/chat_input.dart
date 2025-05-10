@@ -89,6 +89,7 @@ class _ChatInputState extends State<ChatInput> {
                     decoration: const InputDecoration(
                       hintText: 'Type your message...',
                       border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
                       contentPadding: EdgeInsets.symmetric(vertical: 12.0),
                     ),
                     maxLines: null,

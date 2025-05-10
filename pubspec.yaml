@@ -31,4 +31,12 @@ flutter:
   assets:
     - assets/icon/CGAI_logo.png
     - assets/images/USTP.png
+  fonts:
+    - family: Montserrat
+      fonts:
+        - asset: assets/static/Montserrat-Regular.ttf
+        - asset: assets/static/Montserrat-Medium.ttf
+          weight: 500
+        - asset: assets/static/Montserrat-Bold.ttf
+          weight: 700
 

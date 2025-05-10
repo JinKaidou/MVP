@@ -1,99 +1,128 @@
-# Campus Guide AI
+# CampusGuide AI
 
-A smart AI assistant for USTP students that answers questions based on the Student Handbook.
+A smart AI assistant for USTP students that provides instant, accurate information from the Student Handbook.
 
-## Overview
+<p align="center">
+  <i>Developed by AbatuComp</i>
+</p>
 
-This application uses RAG (Retrieval Augmented Generation) to provide accurate information from the USTP Student Handbook. The system consists of:
+## 🌟 Overview
 
-- **Backend**: Python Flask server with TF-IDF retrieval and Ollama/Mistral for AI responses
-- **Frontend**: Flutter web app with a chat interface
+CampusGuide AI uses Retrieval Augmented Generation (RAG) technology to deliver precise answers to student queries about USTP policies, procedures, and guidelines. The system intelligently searches through the official Student Handbook to provide reliable information.
 
-## System Requirements
+### Key Features
+
+- **Instant Answers**: Get immediate responses to handbook-related questions
+- **Accurate Information**: All answers sourced directly from official USTP documentation
+- **24/7 Availability**: Access information anytime, anywhere
+- **Intuitive Interface**: Simple chat-based interaction
+
+## 💻 System Architecture
+
+- **Backend**: Python Flask server with advanced TF-IDF retrieval system
+- **AI Engine**: Integrates with Ollama/Mistral for natural language understanding
+- **Frontend**: Responsive Flutter web application with clean UI
+- **Database**: Pre-processed handbook data in optimized CSV format
+
+## 🚀 Installation & Setup
+
+### System Requirements
 
 - **CPU**: 4+ cores recommended
 - **RAM**: 8GB minimum, 16GB recommended
-- **Storage**: 5GB free space for models and code
+- **Storage**: 5GB free space
 - **OS**: Windows 10/11, macOS, or Linux
 
-## Prerequisites
+### Prerequisites
 
-### 1. Python Setup
-- Install Python 3.9 or newer
-- Install required packages:
-  ```
-  pip install flask flask-cors pandas scikit-learn numpy requests
-  ```
+1. **Python Environment**
+   - Python 3.9+ required
+   - Install dependencies:
+     ```
+     pip install flask flask-cors pandas scikit-learn numpy requests
+     ```
 
-### 2. Ollama Setup
-- Download Ollama from [ollama.com/download](https://ollama.com/download)
-- Install and launch the application
-- Download the Mistral model:
-  ```
-  ollama pull mistral
-  ```
+2. **Ollama Setup**
+   - Download from [ollama.com/download](https://ollama.com/download)
+   - Pull the Mistral model:
+     ```
+     ollama pull mistral
+     ```
 
-### 3. Data Setup
-- Place the CSV handbook data in this location:
-  ```
-  lib/server/data/handbook.csv
-  ```
-  (The CSV should have columns like Title, Chapter, Article, Section, Content)
+3. **Data Preparation**
+   - Ensure handbook data is available at:
+     ```
+     lib/server/data/handbook.csv
+     ```
 
-### 4. Flutter Setup (for frontend)
-- Install Flutter SDK from [flutter.dev](https://flutter.dev/docs/get-started/install)
-- Enable web support:
-  ```
-  flutter config --enable-web
-  ```
+4. **Flutter Setup**
+   - Install from [flutter.dev](https://flutter.dev/docs/get-started/install)
+   - Enable web support:
+     ```
+     flutter config --enable-web
+     ```
 
-## Running the Application
+## 🔧 Running the Application
 
-### Step 1: Start Ollama
-- Launch Ollama from your applications menu
-- Verify it's running (usually shows in system tray)
+### Launch Sequence
 
-### Step 2: Start the Backend Server
+1. **Start Ollama**
+   - Launch the Ollama application
+
+2. **Start the Backend**
+   ```
+   cd lib/server
+   python app.py
+   ```
+   - Server will run on http://localhost:8000
+
+3. **Launch the Frontend**
+   ```
+   flutter run -d chrome
+   ```
+
+## 🧪 Testing
+
+The system has been thoroughly tested using:
+
+- **Python requests library** - For API endpoint validation
+- **curl** - For HTTP request testing
+- **PowerShell commands** - For environment verification
+- **Direct server execution** - For validating server functionality
+- **Manual code review** - For quality assurance
+
+## 📚 Documentation
+
+### API Endpoints
+
+- `GET /api/health` - Check server status
+- `POST /api/chat` - Submit questions and receive answers
+
+### Sample Usage
+
+```json
+// Request
+POST /api/chat
+{
+  "message": "What are the admission requirements?"
+}
+
+// Response
+{
+  "response": "Based on the USTP Student Handbook:\n\nFollowing the selective admission policy of the university, students must satisfy all the requirements prescribed by their college/department, aside from the minimum requirements for each level as indicated below:\n1. Pass the Admission Test\n2. With Good Moral Character"
+}
 ```
-cd lib/server
-python app.py
-```
-The server will start on http://localhost:8000
 
-### Step 3: Start the Flutter Frontend
-In a new terminal:
-```
-flutter run -d chrome
-```
-This will open the app in Chrome browser.
+## 🔍 Troubleshooting
 
-## Troubleshooting
+- **Server Connection Issues**: Ensure Ollama is running and ports are not blocked
+- **Slow Responses**: First query is typically slower as the AI model loads
+- **Missing Information**: Verify the handbook CSV is properly formatted
 
-### Backend Issues
-- **"Ollama server is not accessible"**: Make sure Ollama is running
-- **"Mistral model not found"**: Run `ollama pull mistral`
-- **CSV loading error**: Check the CSV file exists and has the right columns
+## 👥 Credits
 
-### Frontend Issues
-- **Connection error**: Ensure the backend server is running on port 8000
-- **UI not loading**: Make sure Flutter web support is enabled
+Developed by **AbatuComp** for the USTP community.
 
-## Project Structure
+## 📝 License
 
-- `lib/server/` - Backend Flask server
-  - `app.py` - Main server code
-  - `data/` - CSV handbook data
-- `lib/` - Flutter frontend
-  - `main.dart` - Main entry point
-  - `screens/` - App screens
-  - `services/` - API services
-
-## Performance Notes
-
-- First query might be slow as the model loads
-- Subsequent queries should be faster
-- If you experience out-of-memory errors, reduce the Ollama model parameters in app.py
-
-## License
-
-This project is for educational purposes at USTP.
+This project is intended for educational purposes at the University of Science and Technology of the Philippines (USTP).

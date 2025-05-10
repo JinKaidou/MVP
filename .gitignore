@@ -33,6 +33,14 @@ migrate_working_dir/
 .pub/
 /build/
 
+# Environment secrets
+**/.env
+**/lib/server/.env
+**/lib/server/rag_backend/.env
+
+# Web related
+lib/generated_plugin_registrant.dart
+
 # Symbolication related
 app.*.symbols
 

@@ -128,20 +128,21 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Column(
           children: [
             Expanded(
-              child: _messages.isEmpty
-                  ? const Center(
-                      child: Text(
-                        'Send a message to start chatting',
-                        style: TextStyle(color: Colors.white70),
+              child:
+                  _messages.isEmpty
+                      ? const Center(
+                        child: Text(
+                          'Send a message to start chatting',
+                          style: TextStyle(color: Colors.white70),
+                        ),
+                      )
+                      : ListView.builder(
+                        padding: const EdgeInsets.all(16),
+                        itemCount: _messages.length,
+                        itemBuilder: (context, index) {
+                          return _buildMessageRow(_messages[index]);
+                        },
                       ),
-                    )
-                  : ListView.builder(
-                      padding: const EdgeInsets.all(16),
-                      itemCount: _messages.length,
-                      itemBuilder: (context, index) {
-                        return _buildMessageRow(_messages[index]);
-                      },
-                    ),
             ),
             if (_isLoading)
               Container(
@@ -187,9 +188,10 @@ class _ChatScreenState extends State<ChatScreen> {
             child: Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: message.isUser
-                    ? const Color(0xFF2D7CFF)
-                    : Colors.white.withOpacity(0.85),
+                color:
+                    message.isUser
+                        ? Colors.grey[200]
+                        : Colors.white.withOpacity(0.85),
                 borderRadius: BorderRadius.only(
                   topLeft: const Radius.circular(22),
                   topRight: const Radius.circular(22),
@@ -207,7 +209,7 @@ class _ChatScreenState extends State<ChatScreen> {
               child: Text(
                 message.text,
                 style: TextStyle(
-                  color: message.isUser ? Colors.white : Colors.black87,
+                  color: message.isUser ? Colors.black87 : Colors.black87,
                   fontSize: 16,
                 ),
               ),

@@ -8,19 +8,20 @@ class AIService {
   // Dynamic base URL that works for different platforms
   String get baseUrl {
     if (kIsWeb) {
-      return 'http://127.0.0.1:8000/api'; // Changed port from 5000 to 8000
+      return 'http://127.0.0.1:8000/api';
     } else if (Platform.isAndroid) {
       // For Android emulator or physical device testing
-      const bool useLocalEmulator = true; // Change to false for production
+      const bool useLocalEmulator =
+          false; // Changed to false to use physical device
 
       if (useLocalEmulator) {
-        return 'http://10.0.2.2:5000/api'; // Android emulator
+        return 'http://10.0.2.2:8000/api'; // Android emulator
       } else {
-        return 'https://campus-guide-ai.onrender.com/api'; // Replace with your deployed server
+        return 'http://192.168.18.57:8000/api'; // Your computer's IP address
       }
     } else {
       // iOS or other platforms
-      return 'http://localhost:5000/api';
+      return 'http://localhost:8000/api';
     }
   }
 
@@ -79,9 +80,7 @@ class AIService {
   Future<bool> isServerAvailable() async {
     try {
       final response = await http
-          .get(
-            Uri.parse('$baseUrl/health'),
-          )
+          .get(Uri.parse('$baseUrl/health'))
           .timeout(const Duration(seconds: 5));
 
       return response.statusCode == 200;

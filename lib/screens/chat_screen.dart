@@ -190,7 +190,7 @@ class _ChatScreenState extends State<ChatScreen> {
               decoration: BoxDecoration(
                 color:
                     message.isUser
-                        ? Colors.grey[200]
+                        ? Colors.grey[400]
                         : Colors.white.withOpacity(0.85),
                 borderRadius: BorderRadius.only(
                   topLeft: const Radius.circular(22),
@@ -209,7 +209,7 @@ class _ChatScreenState extends State<ChatScreen> {
               child: Text(
                 message.text,
                 style: TextStyle(
-                  color: message.isUser ? Colors.black87 : Colors.black87,
+                  color: message.isUser ? Colors.white : Colors.black87,
                   fontSize: 16,
                 ),
               ),

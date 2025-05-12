@@ -15,14 +15,31 @@ CampusGuide AI uses Retrieval Augmented Generation (RAG) technology to deliver p
 - **Instant Answers**: Get immediate responses to handbook-related questions
 - **Accurate Information**: All answers sourced directly from official USTP documentation
 - **24/7 Availability**: Access information anytime, anywhere
-- **Intuitive Interface**: Simple chat-based interaction
+- **Intuitive Interface**: Modern UI with chat history and interactive campus map
+- **API Key Authentication**: Secure access control system
 
 ## 💻 System Architecture
 
-- **Backend**: Python Flask server with advanced TF-IDF retrieval system
+The system offers dual implementations for flexibility:
+
+### Standard Implementation
+- **Backend**: Python Flask server with TF-IDF retrieval system
 - **AI Engine**: Integrates with Ollama/Mistral for natural language understanding
-- **Frontend**: Responsive Flutter web application with clean UI
+- **Frontend**: Responsive Flutter mobile application with modern UI
 - **Database**: Pre-processed handbook data in optimized CSV format
+
+### Advanced Implementation
+- **Backend**: FastAPI server with LangChain for advanced RAG pipeline
+- **Vector Database**: FAISS for efficient semantic searching
+- **AI Engine**: Compatible with multiple LLM providers
+- **Authentication**: Secure API key system
+
+## 🔄 UI Features
+
+- **Chat Interface**: Clean, modern messaging UI with conversation bubbles
+- **History Sidebar**: Access previous questions through convenient drawer menu
+- **Campus Map**: Interactive map with custom theme color integration
+- **Responsive Design**: Optimized for Android devices
 
 ## 🚀 Installation & Setup
 
@@ -32,54 +49,73 @@ CampusGuide AI uses Retrieval Augmented Generation (RAG) technology to deliver p
 - **RAM**: 8GB minimum, 16GB recommended
 - **Storage**: 5GB free space
 - **OS**: Windows 10/11, macOS, or Linux
+- **Mobile**: Android 6.0+ (for mobile app)
 
 ### Prerequisites
 
 1. **Python Environment**
    - Python 3.9+ required
-   - Install dependencies:
+   - Basic Flask implementation:
      ```
      pip install flask flask-cors pandas scikit-learn numpy requests
      ```
+   - Advanced FastAPI implementation:
+     ```
+     pip install fastapi uvicorn langchain sentence-transformers faiss-cpu
+     ```
 
-2. **Ollama Setup**
-   - Download from [ollama.com/download](https://ollama.com/download)
-   - Pull the Mistral model:
+2. **LLM Setup**
+   - Basic: Download Ollama from [ollama.com/download](https://ollama.com/download)
      ```
      ollama pull mistral
      ```
+   - Advanced: Configure API key for chosen LLM provider
 
 3. **Data Preparation**
-   - Ensure handbook data is available at:
+   - Basic: Ensure handbook data is available at:
      ```
      lib/server/data/handbook.csv
+     ```
+   - Advanced: Process documents for vector embedding:
+     ```
+     python vector_ingestion.py
      ```
 
 4. **Flutter Setup**
    - Install from [flutter.dev](https://flutter.dev/docs/get-started/install)
-   - Enable web support:
+   - Get dependencies:
      ```
-     flutter config --enable-web
+     flutter pub get
      ```
 
 ## 🔧 Running the Application
 
-### Launch Sequence
+### Basic Implementation
 
 1. **Start Ollama**
    - Launch the Ollama application
 
-2. **Start the Backend**
+2. **Start the Flask Backend**
    ```
    cd lib/server
    python app.py
    ```
    - Server will run on http://localhost:8000
 
-3. **Launch the Frontend**
+### Advanced Implementation
+
+1. **Start the FastAPI Backend**
    ```
-   flutter run -d chrome
+   cd backend
+   uvicorn main:app --reload
    ```
+   - Server will run on http://localhost:8000
+
+### Launch the Frontend
+
+```
+flutter run
+```
 
 ## 🧪 Testing
 
@@ -90,13 +126,20 @@ The system has been thoroughly tested using:
 - **PowerShell commands** - For environment verification
 - **Direct server execution** - For validating server functionality
 - **Manual code review** - For quality assurance
+- **Flutter testing** - For UI validation
 
 ## 📚 Documentation
 
-### API Endpoints
+### Basic API Endpoints
 
 - `GET /api/health` - Check server status
 - `POST /api/chat` - Submit questions and receive answers
+
+### Advanced API Endpoints
+
+- `GET /docs` - FastAPI auto-generated documentation
+- `POST /api/query` - RAG-based question answering with vector search
+- `GET /api/validate` - Validate API key authentication
 
 ### Sample Usage
 
@@ -115,9 +158,10 @@ POST /api/chat
 
 ## 🔍 Troubleshooting
 
-- **Server Connection Issues**: Ensure Ollama is running and ports are not blocked
+- **Server Connection Issues**: Ensure backend server is running and ports are not blocked
 - **Slow Responses**: First query is typically slower as the AI model loads
-- **Missing Information**: Verify the handbook CSV is properly formatted
+- **Authentication Errors**: Verify API key is properly configured
+- **UI Issues**: Ensure Flutter dependencies are up to date
 
 ## 👥 Credits
 

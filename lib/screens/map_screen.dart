@@ -2,7 +2,9 @@
 import 'package:flutter/material.dart';
 
 class MapScreen extends StatelessWidget {
-  const MapScreen({super.key});
+  final Color themeColor;
+
+  const MapScreen({super.key, this.themeColor = const Color(0xFF2D7CFF)});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +14,7 @@ class MapScreen extends StatelessWidget {
           'Campus Map',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: const Color(0xFF2D7CFF),
+        backgroundColor: themeColor,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -33,16 +35,16 @@ class MapScreen extends StatelessWidget {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.error_outline,
-                      color: Colors.red,
+                      color: themeColor.withOpacity(0.8),
                       size: 48,
                     ),
                     const SizedBox(height: 16),
                     Text(
                       'Error loading map: ${error.toString()}',
                       textAlign: TextAlign.center,
-                      style: const TextStyle(color: Colors.red),
+                      style: TextStyle(color: themeColor.withOpacity(0.8)),
                     ),
                   ],
                 );

@@ -24,103 +24,52 @@ class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = TextEditingController();
   bool _isLoading = false;
   final List<String> _previousPrompts = [];
+  final ScrollController _scrollController = ScrollController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
     _addBotMessage(
-      "Hi there! I'm your campus guide AI. You can ask me anything about the campus.",
+      "Hi! User nice to see you again!\nHow can I be of assistance?",
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Colors.transparent,
-      drawer: Drawer(
-        width: 180, // Thin sidebar
-        backgroundColor: Colors.grey.shade200.withOpacity(0.85),
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.grey.shade200.withOpacity(0.5),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset('assets/icon/CGAI_logo.png', height: 48),
-                  const SizedBox(height: 12),
-                  const Text(
-                    'CampusGuideAI',
-                    style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1.1,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            if (_previousPrompts.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 4,
-                ),
-                child: Text(
-                  'Previous Prompts',
-                  style: TextStyle(
-                    color: Colors.black.withOpacity(0.6),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
-                ),
-              ),
-            ..._previousPrompts.map(
-              (prompt) => ListTile(
-                title: Text(
-                  prompt,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 14),
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                  setState(() {
-                    _controller.text = prompt;
-                    _controller.selection = TextSelection.fromPosition(
-                      TextPosition(offset: _controller.text.length),
-                    );
-                  });
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
+      extendBodyBehindAppBar: true,
+      drawer: _buildHistorySidebar(),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF2D7CFF),
-        elevation: 0,
-        leading: Builder(
-          builder:
-              (context) => IconButton(
-                icon: const Icon(Icons.menu, color: Colors.white),
-                onPressed: () => Scaffold.of(context).openDrawer(),
-              ),
+        backgroundColor: Colors.white,
+        elevation: 4,
+        shadowColor: Colors.black.withOpacity(0.16),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(20),
+          ),
         ),
-        title: const Text(
-          'CampusGuide AI',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        leading: IconButton(
+          icon: const Icon(Icons.menu, color: Colors.black54),
+          onPressed: () => _scaffoldKey.currentState?.openDrawer(),
         ),
-        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.history, color: Colors.black54),
+            onPressed: () => _scaffoldKey.currentState?.openDrawer(),
+          ),
+        ],
+        title: const Text(''),
       ),
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF2D7CFF), Color(0xFF6EC6FF)],
+            colors: [
+              const Color(0xFFADD8E6).withOpacity(0.7), // Light blue at top
+              Colors.white.withOpacity(0.7), // Almost white at bottom
+            ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -128,6 +77,7 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Column(
           children: [
             Expanded(
+<<<<<<< HEAD
               child:
                   _messages.isEmpty
                       ? const Center(
@@ -166,10 +116,78 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                   ],
                 ),
+=======
+              child: ListView.builder(
+                controller: _scrollController,
+                padding: const EdgeInsets.only(
+                    top: 100, left: 16, right: 16, bottom: 16),
+                itemCount: _messages.length,
+                itemBuilder: (context, index) {
+                  return _buildMessageRow(_messages[index]);
+                },
+>>>>>>> 08bf410b7231711e4d4873059daa379c54572df6
               ),
+            ),
             _buildInputArea(),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildHistorySidebar() {
+    return Drawer(
+      width: 260,
+      backgroundColor: const Color(0xFFE5E5E5),
+      child: Column(
+        children: [
+          SizedBox(
+            height: 60,
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: IconButton(
+                icon: const Icon(Icons.close, color: Colors.black87),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ),
+          ),
+          Expanded(
+            child: _previousPrompts.isEmpty
+                ? const Center(
+                    child: Text(
+                      'No conversation history yet',
+                      style: TextStyle(color: Colors.black54),
+                    ),
+                  )
+                : ListView.separated(
+                    itemCount: _previousPrompts.length,
+                    separatorBuilder: (context, index) =>
+                        const Divider(height: 1),
+                    itemBuilder: (context, index) {
+                      final prompt = _previousPrompts[index];
+                      return ListTile(
+                        leading: const Icon(Icons.chat_bubble_outline,
+                            color: Colors.black54),
+                        title: Text(
+                          prompt,
+                          style: const TextStyle(
+                            color: Colors.black87,
+                            fontSize: 14,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        onTap: () {
+                          _controller.text = prompt;
+                          Navigator.pop(context);
+                          // Move focus to text field
+                          FocusScope.of(context).requestFocus(FocusNode());
+                        },
+                      );
+                    },
+                  ),
+          ),
+        ],
       ),
     );
   }
@@ -182,12 +200,13 @@ class _ChatScreenState extends State<ChatScreen> {
             message.isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (!message.isUser) _buildAvatar(isUser: false),
+          if (!message.isUser) _buildBotAvatar(),
           const SizedBox(width: 8),
           Flexible(
             child: Container(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
+<<<<<<< HEAD
                 color:
                     message.isUser
                         ? const Color(0xFFB0B0B0)
@@ -198,175 +217,203 @@ class _ChatScreenState extends State<ChatScreen> {
                   bottomLeft: Radius.circular(message.isUser ? 22 : 4),
                   bottomRight: Radius.circular(message.isUser ? 4 : 22),
                 ),
+=======
+                color: message.isUser
+                    ? Colors.white
+                    : const Color(0xFFADD8E6)
+                        .withOpacity(0.86), // Light blue for bot
+                borderRadius: BorderRadius.circular(20),
+>>>>>>> 08bf410b7231711e4d4873059daa379c54572df6
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.04),
-                    blurRadius: 8,
+                    color: Colors.black.withOpacity(0.06),
+                    blurRadius: 4,
                     offset: const Offset(0, 2),
                   ),
                 ],
               ),
               child: Text(
                 message.text,
+<<<<<<< HEAD
                 style: TextStyle(
                   color: message.isUser ? Colors.black : Colors.black87,
                   fontSize: 16,
+=======
+                style: const TextStyle(
+                  color: Colors.black87,
+                  fontSize: 14,
+>>>>>>> 08bf410b7231711e4d4873059daa379c54572df6
                 ),
               ),
             ),
           ),
-          const SizedBox(width: 8),
-          if (message.isUser) _buildAvatar(isUser: true),
         ],
       ),
     );
   }
 
-  Widget _buildAvatar({required bool isUser}) {
-    return CircleAvatar(
-      radius: 16,
-      backgroundColor: isUser ? Colors.blue : Colors.lightBlue,
-      child: Icon(
-        isUser ? Icons.person : Icons.school,
-        color: Colors.white,
-        size: 16,
+  Widget _buildBotAvatar() {
+    return Container(
+      width: 40,
+      height: 40,
+      margin: const EdgeInsets.only(right: 4),
+      child: Image.asset(
+        'assets/icon/CGAI_logo.png',
+        width: 40,
+        height: 40,
       ),
     );
   }
 
   Widget _buildInputArea() {
     return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(color: Colors.transparent),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(30),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
       child: Row(
         children: [
+          IconButton(
+            icon: const Icon(Icons.add_circle_outline, color: Colors.blue),
+            onPressed: () {},
+          ),
           Expanded(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.95),
-                borderRadius: BorderRadius.circular(25),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
+            child: TextField(
+              controller: _controller,
+              decoration: const InputDecoration(
+                hintText: 'Type a message...',
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.symmetric(horizontal: 8),
               ),
-              child: TextField(
-                controller: _controller,
-                decoration: const InputDecoration(
-                  hintText: 'Type a message...',
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(vertical: 10),
-                ),
-                onSubmitted: (text) {
-                  if (text.trim().isNotEmpty) {
-                    _handleSendMessage(text);
-                    _controller.clear();
-                  }
-                },
-              ),
+              maxLines: 1,
+              textInputAction: TextInputAction.send,
+              onSubmitted: _handleSubmit,
             ),
           ),
-          const SizedBox(width: 8),
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0xFF2D7CFF), Color(0xFF6EC6FF)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              shape: BoxShape.circle,
-            ),
-            child: IconButton(
-              icon: const Icon(Icons.send, color: Colors.white, size: 20),
-              onPressed: () {
-                if (_controller.text.trim().isNotEmpty) {
-                  _handleSendMessage(_controller.text);
-                  _controller.clear();
-                }
-              },
-            ),
+          IconButton(
+            icon: const Icon(Icons.send, color: Colors.blue),
+            onPressed: () => _handleSubmit(_controller.text),
           ),
         ],
       ),
     );
   }
 
-  void _addMessage(Message message) {
+  void _handleSubmit(String text) {
+    if (text.trim().isEmpty) return;
+
+    // Add user message
     setState(() {
-      _messages.add(message);
+      _messages.add(
+        Message(
+          text: text,
+          isUser: true,
+          timestamp: DateTime.now(),
+        ),
+      );
+      _controller.clear();
+      _isLoading = true;
+
+      // Save to previous prompts if not already there
+      if (!_previousPrompts.contains(text)) {
+        _previousPrompts.insert(0, text);
+        if (_previousPrompts.length > 5) {
+          _previousPrompts.removeLast();
+        }
+      }
+    });
+
+    // Scroll to bottom
+    _scrollToBottom();
+
+    // Process message
+    if (text.toLowerCase().contains('map')) {
+      _processMapRequest();
+    } else {
+      _processRegularMessage(text);
+    }
+  }
+
+  void _scrollToBottom() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
     });
   }
 
-  void _addBotMessage(String text) {
-    _addMessage(Message(text: text, isUser: false, timestamp: DateTime.now()));
-  }
-
-  void _handleSendMessage(String text) async {
-    // Add user message
-    _addMessage(Message(text: text, isUser: true, timestamp: DateTime.now()));
-
-    if (text.trim().isNotEmpty &&
-        (_previousPrompts.isEmpty || _previousPrompts.first != text.trim())) {
+  void _processMapRequest() {
+    // Delay to simulate processing
+    Future.delayed(const Duration(milliseconds: 500), () {
       setState(() {
-        _previousPrompts.insert(0, text.trim());
-        if (_previousPrompts.length > 20) _previousPrompts.removeLast();
+        _isLoading = false;
       });
-    }
 
-    // Handle map-related queries directly to improve response time
-    if (text.toLowerCase().contains('map') ||
-        text.toLowerCase().contains('location') ||
-        text.toLowerCase().contains('where')) {
-      _addBotMessage(
-        "I can show you the campus map. Would you like to see it?",
+      // Show map screen with updated UI colors
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const MapScreen(
+            themeColor: Color(0xFFADD8E6),
+          ),
+        ),
       );
 
-      // Show map as a modal bottom sheet after user triggers map
-      Future.delayed(const Duration(seconds: 1), () {
-        showModalBottomSheet(
-          context: context,
-          isScrollControlled: true,
-          backgroundColor: Colors.transparent,
-          builder:
-              (context) => FractionallySizedBox(
-                heightFactor: 0.92,
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(24),
-                  ),
-                  child: MapScreen(),
-                ),
-              ),
-        );
+      // Add bot response about map
+      _addBotMessage("Here's the campus map!");
+    });
+  }
+
+  void _processRegularMessage(String text) {
+    // Example predefined response for enrollment
+    if (text.toLowerCase().contains('enroll')) {
+      Future.delayed(const Duration(milliseconds: 1000), () {
+        setState(() {
+          _isLoading = false;
+        });
+        _addBotMessage(
+            "Kindly go to www.YourUni.com and fill up this enrollment form to enroll at YourUni");
       });
       return;
     }
 
-    // Set loading state
-    setState(() {
-      _isLoading = true;
+    // Otherwise, get response from AI service
+    _aiService.sendMessage(text).then((response) {
+      setState(() {
+        _isLoading = false;
+      });
+      _addBotMessage(response);
+    }).catchError((error) {
+      setState(() {
+        _isLoading = false;
+      });
+      _addBotMessage("Sorry, I encountered an error: $error");
     });
+  }
 
-    try {
-      // Get response from AI
-      final response = await _aiService.sendMessage(text);
-
-      // Remove loading state and add response
-      setState(() {
-        _isLoading = false;
-        _addBotMessage(response);
-      });
-    } catch (e) {
-      // Remove loading state and add error message
-      setState(() {
-        _isLoading = false;
-        _addBotMessage("Sorry, I encountered an error. Please try again.");
-      });
-    }
+  void _addBotMessage(String text) {
+    setState(() {
+      _messages.add(
+        Message(
+          text: text,
+          isUser: false,
+          timestamp: DateTime.now(),
+        ),
+      );
+    });
+    _scrollToBottom();
   }
 }

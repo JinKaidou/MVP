@@ -609,7 +609,7 @@ Try asking specific questions like "What is the grading system?", "Where is the 
 """
     
     # Personal state queries
-    if query_lower in ["i am tired", "tired", "stressed", "stressed out"]:
+    if query_lower in ["i am tired", "tired", "stressed", "stressed out", "i'm tired"]:
         # Choose a random library to recommend from the available buildings
         libraries = {
             "LRC": "The Learning Resource Center (LRC, Building 23) has quiet study spaces and comfortable seating where you can relax and recharge. From the main entrance, follow the main path straight ahead until you reach the second intersection, then turn right. The LRC will be on your left in the Academic Core Zone (Blue).",

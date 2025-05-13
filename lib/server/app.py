@@ -263,7 +263,28 @@ If you're feeling overwhelmed, consider speaking with the Guidance and Counselin
 For more information, please visit: https://www.facebook.com/ustpgsucdo
 """
     
-    # Check for common FAQs
+    # Enhanced FAQ matching with relevant keywords for each category
+    # WiFi related queries
+    if any(word in query_lower for word in ["wifi", "password", "internet", "connection", "network"]):
+        return COMMON_FAQS["wifi access"]
+        
+    # Enrollment related queries
+    if any(word in query_lower for word in ["enrollment", "enroll", "register", "registration", "when is class", "school start"]):
+        return COMMON_FAQS["when is enrollment"]
+        
+    # Registrar location queries
+    if any(word in query_lower for word in ["registrar", "where is registrar", "registrar office", "registrar location", "where to get transcript"]):
+        return COMMON_FAQS["where is the registrar"]
+        
+    # Library hours queries
+    if any(word in query_lower for word in ["library", "library hour", "when library open", "library schedule", "library timing"]):
+        return COMMON_FAQS["library hours"]
+        
+    # Lost and found queries
+    if any(word in query_lower for word in ["lost", "found", "lost item", "missing", "lost and found", "where to find lost"]):
+        return COMMON_FAQS["lost and found"]
+    
+    # Standard key-in-query check as fallback
     for key, response in COMMON_FAQS.items():
         if key in query_lower:
             return response

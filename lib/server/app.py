@@ -115,7 +115,11 @@ def preprocess_text(text):
         "CAS": "_CAS_MARKER_",
         "USTP": "_USTP_MARKER_",
         "FIC": "_FIC_MARKER_",
-        "SPED": "_SPED_MARKER_"
+        "SPED": "_SPED_MARKER_",
+        "CSM": "_CSM_MARKER_",
+        "COT": "_COT_MARKER_",
+        "SHS": "_SHS_MARKER_",
+        "OSA": "_OSA_MARKER_"
     }
     
     # Preserve building numbers
@@ -338,30 +342,6 @@ def handle_campus_location_query(query):
     # Get deeper query context
     query_context = analyze_query_context(query)
     
-    # Common location keywords people might use in their queries
-    buildings = {
-        "administration": ["admin", "administration", "admin building", "administration building", "bldg 10", "building 10"],
-        "arts_culture": ["arcu", "arts and culture", "arts building", "bldg 1", "building 1", "arcu building"],
-        "integrated_tech": ["integrated technology", "integrated tech", "bldg 3", "building 3", "technology building"],
-        "rotc": ["rotc", "rotc building", "bldg 4", "building 4"],
-        "ict": ["ict", "ict building", "bldg 9", "building 9", "information technology", "computer", "it building", "citc", "college of information technology and computer studies"],
-        "cafeteria": ["cafeteria", "canteen", "food court", "bldg 20", "building 20", "where to eat", "dining", "lunch"],
-        "lrc": ["lrc", "learning resource center", "library", "bldg 23", "building 23", "resource center"],
-        "science": ["science complex", "science building", "bldg 36", "building 36"],
-        "student_center": ["student center", "education complex", "bldg 44", "building 44"],
-        "sports": ["sports complex", "gym", "gymnasium", "bldg 49", "building 49", "sports center"],
-        "dormitory": ["dorm", "dormitory", "residence hall", "bldg 51", "building 51", "where to stay"],
-        "engineering": ["engineering", "engineering complex", "engineering building", "bldg 42", "building 42", "bldg 43", "building 43"],
-        "registrar": ["registrar", "registrar's office", "registration", "transcript", "records"],
-        "map": ["map", "campus map", "directions", "layout", "overview"],
-        # Add common department/college abbreviations
-        "cea": ["cea", "cea building", "college of engineering and architecture", "engineering and architecture"],
-        "ccs": ["ccs", "ccs building", "college of computer studies", "computer studies"],
-        "cba": ["cba", "cba building", "college of business administration", "business administration"],
-        "coed": ["coed", "coed building", "college of education", "education building"],
-        "cas": ["cas", "cas building", "college of arts and sciences", "arts and sciences"]
-    }
-    
     # Updated location keywords with the correct abbreviations and college names
     buildings = {
         "administration": ["admin", "administration", "admin building", "administration building", "bldg 10", "building 10"],
@@ -384,13 +364,13 @@ def handle_campus_location_query(query):
         "coed": ["coed", "coed building", "college of education", "education building"],
         "cas": ["cas", "cas building", "college of arts and sciences", "arts and sciences"],
         "old_engineering": ["old engineering", "old engineering building", "bldg 5", "building 5"],
-        "finance": ["finance", "accounting", "finance and accounting", "bldg 14", "building 14"],
+        "finance": ["finance", "accounting", "finance and accounting", "bldg 14", "building 14", "shs", "senior high school", "senior high"],
         "hrm": ["hrm", "hrm building", "bldg 15", "building 15"],
         "culinary": ["culinary", "culinary building", "bldg 18", "building 18"],
         "science_centrum": ["science centrum", "centrum", "bldg 19", "building 19"],
         "foods": ["foods", "foods trade", "foods trade building", "bldg 24", "building 24"],
         "old_education": ["old education", "old education building", "bldg 35", "building 35"],
-        "technology": ["technology", "technology building", "bldg 47", "building 47"],
+        "technology": ["technology", "technology building", "bldg 47", "building 47", "cot", "college of technology"],
         "sports_field": ["sports field", "track", "field", "sports track"],
         "basketball": ["basketball", "basketball court", "court"],
         "tennis": ["tennis", "tennis court"],
@@ -399,14 +379,15 @@ def handle_campus_location_query(query):
         "residences": ["residences", "bldg 53", "building 53"],
         "rer_hall": ["rer", "rer hall", "rer memorial hall", "bldg 16", "building 16"],
         "guard_house": ["guard house", "guard", "security", "bldg 21", "building 21"],
-        "old_medical": ["old medical", "medical", "old medical building", "bldg 27", "building 27"],
+        "old_medical": ["old medical", "medical", "old medical building", "bldg 27", "building 27", "clinic", "osa", "office of student affairs", "student affairs"],
         "old_science": ["old science", "old science building", "bldg 28", "building 28"],
         "supply": ["supply", "supply office", "bldg 45", "building 45"],
         "faculty_lrc": ["faculty lrc", "faculty learning resource center", "bldg 50", "building 50"],
         "sump_pit": ["sump pit", "bldg 52", "building 52"],
         "fic_extension": ["fic extension", "bldg 54", "building 54"],
         "toilet": ["toilet", "restroom", "bathroom", "bldg f", "building f"],
-        "sped": ["sped", "sped building", "bldg g", "building g"]
+        "sped": ["sped", "sped building", "bldg g", "building g"],
+        "science_complex_41": ["csm", "college of science and mathematics", "bldg 41", "building 41"]
     }
     
     # Update CAMPUS_LOCATIONS with the complete information provided by the user
@@ -433,7 +414,11 @@ def handle_campus_location_query(query):
         
         "fic_extension": "The FIC Extension (BLDG 54) is located in the eastern area of campus. From the main entrance, follow the main path straight, pass the central square, and take the eastern path to find it on your right. It's in the Auxiliary Services Zone (Gray).",
         
-        "toilet": "The Toilet facilities (BLDG F) are situated in the northeastern section of campus. From the main entrance, proceed to the central square, then take the northeastern path to find them on your right. They're in the Auxiliary Services Zone (Gray)."
+        "toilet": "The Toilet facilities (BLDG F) are situated in the northeastern section of campus. From the main entrance, proceed to the central square, then take the northeastern path to find them on your right. They're in the Auxiliary Services Zone (Gray).",
+        
+        "science_complex_41": "The College of Science and Mathematics (CSM) is located in Building 41 in the eastern part of campus. From the main entrance, follow the main road through campus, past the central square, and take the eastern path to find it on your right. It's in the Academic Core Zone (Blue).",
+        
+        "old_medical": "Building 27 houses multiple facilities, including the Clinic on the ground floor and the Office of Student Affairs (OSA) on the second floor. From the main entrance, proceed to the central square and take the eastern path to find it on your left. It's in the Auxiliary Services Zone (Gray)."
     }
     
     # Update CAMPUS_LOCATIONS with new entries
@@ -933,7 +918,11 @@ def get_response_from_query(query, top_k=6):
             "arcu": "arts and culture building arcu",
             "coed": "college of education coed",
             "cas": "college of arts and sciences cas",
-            "fic": "food innovation center fic"
+            "fic": "food innovation center fic",
+            "csm": "college of science and mathematics csm",
+            "cot": "college of technology cot",
+            "shs": "senior high school shs",
+            "osa": "office of student affairs osa"
         }
         
         # Check if query contains any abbreviations

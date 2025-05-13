@@ -11,7 +11,7 @@ class AuthService extends ChangeNotifier {
   String? _userId;
 
   // Base URL for your API server
-  final String _baseUrl = 'http://10.0.2.2:5000/api'; // Android emulator
+  final String _baseUrl = 'http://192.168.0.129:5000/api'; // Physical device
   // For physical devices, use your computer's actual IP address:
   // final String _baseUrl = 'http://192.168.1.X:5000/api';
 

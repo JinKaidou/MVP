@@ -47,9 +47,7 @@ class _ChatScreenState extends State<ChatScreen> {
         elevation: 4,
         shadowColor: Colors.black.withOpacity(0.16),
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(20),
-          ),
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
         ),
         leading: IconButton(
           icon: const Icon(Icons.menu, color: Colors.black54),
@@ -77,22 +75,19 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Column(
           children: [
             Expanded(
-<<<<<<< HEAD
-              child:
-                  _messages.isEmpty
-                      ? const Center(
-                        child: Text(
-                          'Send a message to start chatting',
-                          style: TextStyle(color: Colors.white70),
-                        ),
-                      )
-                      : ListView.builder(
-                        padding: const EdgeInsets.all(16),
-                        itemCount: _messages.length,
-                        itemBuilder: (context, index) {
-                          return _buildMessageRow(_messages[index]);
-                        },
-                      ),
+              child: ListView.builder(
+                controller: _scrollController,
+                padding: const EdgeInsets.only(
+                  top: 100,
+                  left: 16,
+                  right: 16,
+                  bottom: 16,
+                ),
+                itemCount: _messages.length,
+                itemBuilder: (context, index) {
+                  return _buildMessageRow(_messages[index]);
+                },
+              ),
             ),
             if (_isLoading)
               Container(
@@ -116,18 +111,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                   ],
                 ),
-=======
-              child: ListView.builder(
-                controller: _scrollController,
-                padding: const EdgeInsets.only(
-                    top: 100, left: 16, right: 16, bottom: 16),
-                itemCount: _messages.length,
-                itemBuilder: (context, index) {
-                  return _buildMessageRow(_messages[index]);
-                },
->>>>>>> 08bf410b7231711e4d4873059daa379c54572df6
               ),
-            ),
             _buildInputArea(),
           ],
         ),
@@ -152,40 +136,43 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ),
           Expanded(
-            child: _previousPrompts.isEmpty
-                ? const Center(
-                    child: Text(
-                      'No conversation history yet',
-                      style: TextStyle(color: Colors.black54),
-                    ),
-                  )
-                : ListView.separated(
-                    itemCount: _previousPrompts.length,
-                    separatorBuilder: (context, index) =>
-                        const Divider(height: 1),
-                    itemBuilder: (context, index) {
-                      final prompt = _previousPrompts[index];
-                      return ListTile(
-                        leading: const Icon(Icons.chat_bubble_outline,
-                            color: Colors.black54),
-                        title: Text(
-                          prompt,
-                          style: const TextStyle(
-                            color: Colors.black87,
-                            fontSize: 14,
+            child:
+                _previousPrompts.isEmpty
+                    ? const Center(
+                      child: Text(
+                        'No conversation history yet',
+                        style: TextStyle(color: Colors.black54),
+                      ),
+                    )
+                    : ListView.separated(
+                      itemCount: _previousPrompts.length,
+                      separatorBuilder:
+                          (context, index) => const Divider(height: 1),
+                      itemBuilder: (context, index) {
+                        final prompt = _previousPrompts[index];
+                        return ListTile(
+                          leading: const Icon(
+                            Icons.chat_bubble_outline,
+                            color: Colors.black54,
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        onTap: () {
-                          _controller.text = prompt;
-                          Navigator.pop(context);
-                          // Move focus to text field
-                          FocusScope.of(context).requestFocus(FocusNode());
-                        },
-                      );
-                    },
-                  ),
+                          title: Text(
+                            prompt,
+                            style: const TextStyle(
+                              color: Colors.black87,
+                              fontSize: 14,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          onTap: () {
+                            _controller.text = prompt;
+                            Navigator.pop(context);
+                            // Move focus to text field
+                            FocusScope.of(context).requestFocus(FocusNode());
+                          },
+                        );
+                      },
+                    ),
           ),
         ],
       ),
@@ -206,24 +193,13 @@ class _ChatScreenState extends State<ChatScreen> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
-<<<<<<< HEAD
                 color:
                     message.isUser
-                        ? const Color(0xFFB0B0B0)
-                        : Colors.white.withOpacity(0.85),
-                borderRadius: BorderRadius.only(
-                  topLeft: const Radius.circular(22),
-                  topRight: const Radius.circular(22),
-                  bottomLeft: Radius.circular(message.isUser ? 22 : 4),
-                  bottomRight: Radius.circular(message.isUser ? 4 : 22),
-                ),
-=======
-                color: message.isUser
-                    ? Colors.white
-                    : const Color(0xFFADD8E6)
-                        .withOpacity(0.86), // Light blue for bot
+                        ? Colors.white
+                        : const Color(
+                          0xFFADD8E6,
+                        ).withOpacity(0.86), // Light blue for bot
                 borderRadius: BorderRadius.circular(20),
->>>>>>> 08bf410b7231711e4d4873059daa379c54572df6
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.06),
@@ -234,16 +210,7 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
               child: Text(
                 message.text,
-<<<<<<< HEAD
-                style: TextStyle(
-                  color: message.isUser ? Colors.black : Colors.black87,
-                  fontSize: 16,
-=======
-                style: const TextStyle(
-                  color: Colors.black87,
-                  fontSize: 14,
->>>>>>> 08bf410b7231711e4d4873059daa379c54572df6
-                ),
+                style: const TextStyle(color: Colors.black87, fontSize: 14),
               ),
             ),
           ),
@@ -257,11 +224,7 @@ class _ChatScreenState extends State<ChatScreen> {
       width: 40,
       height: 40,
       margin: const EdgeInsets.only(right: 4),
-      child: Image.asset(
-        'assets/icon/CGAI_logo.png',
-        width: 40,
-        height: 40,
-      ),
+      child: Image.asset('assets/icon/CGAI_logo.png', width: 40, height: 40),
     );
   }
 
@@ -314,11 +277,7 @@ class _ChatScreenState extends State<ChatScreen> {
     // Add user message
     setState(() {
       _messages.add(
-        Message(
-          text: text,
-          isUser: true,
-          timestamp: DateTime.now(),
-        ),
+        Message(text: text, isUser: true, timestamp: DateTime.now()),
       );
       _controller.clear();
       _isLoading = true;
@@ -366,9 +325,7 @@ class _ChatScreenState extends State<ChatScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const MapScreen(
-            themeColor: Color(0xFFADD8E6),
-          ),
+          builder: (context) => const MapScreen(themeColor: Color(0xFFADD8E6)),
         ),
       );
 
@@ -385,33 +342,33 @@ class _ChatScreenState extends State<ChatScreen> {
           _isLoading = false;
         });
         _addBotMessage(
-            "Kindly go to www.YourUni.com and fill up this enrollment form to enroll at YourUni");
+          "Kindly go to www.YourUni.com and fill up this enrollment form to enroll at YourUni",
+        );
       });
       return;
     }
 
     // Otherwise, get response from AI service
-    _aiService.sendMessage(text).then((response) {
-      setState(() {
-        _isLoading = false;
-      });
-      _addBotMessage(response);
-    }).catchError((error) {
-      setState(() {
-        _isLoading = false;
-      });
-      _addBotMessage("Sorry, I encountered an error: $error");
-    });
+    _aiService
+        .sendMessage(text)
+        .then((response) {
+          setState(() {
+            _isLoading = false;
+          });
+          _addBotMessage(response);
+        })
+        .catchError((error) {
+          setState(() {
+            _isLoading = false;
+          });
+          _addBotMessage("Sorry, I encountered an error: $error");
+        });
   }
 
   void _addBotMessage(String text) {
     setState(() {
       _messages.add(
-        Message(
-          text: text,
-          isUser: false,
-          timestamp: DateTime.now(),
-        ),
+        Message(text: text, isUser: false, timestamp: DateTime.now()),
       );
     });
     _scrollToBottom();

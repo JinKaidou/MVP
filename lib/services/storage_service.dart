@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class StorageService {
-  final String _baseUrl = 'http://10.0.2.2:5000/api';
+  final String _baseUrl = 'http://192.168.0.129:5000/api';
 
   // Local storage keys
   static const String _chatHistoryKey = 'chat_history';

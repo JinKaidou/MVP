@@ -17,7 +17,7 @@ class AIService {
       if (useLocalEmulator) {
         return 'http://10.0.2.2:8000/api'; // Android emulator
       } else {
-        return 'http://192.168.18.57:8000/api'; // Your computer's IP address
+        return 'http://192.168.0.129:8000/api'; // Your computer's IP address
       }
     } else {
       // iOS or other platforms

@@ -33,6 +33,43 @@ FACEBOOK_PAGES = {
     "guidance": "https://www.facebook.com/ustpgsucdo"
 }
 
+# Campus locations dictionary with detailed information about buildings and directions
+CAMPUS_LOCATIONS = {
+    "arts_culture": "Arts and Culture Building (BLDG 1) is located in the northwest area of campus near the sports facilities. From the main entrance, take the first right and follow the path past the tennis courts. The building will be on your left.",
+    "integrated_tech": "Integrated Technology Building (BLDG 3) is found in the western part of campus. From the main entrance on Claro M. Recto Avenue, proceed straight and take the first left turn. The building will be on your right in the Academic Core Zone.",
+    "rotc": "ROTC Building (BLDG 4) is located near the western boundary of campus. From the main gate, go straight and take the first left, then immediate left again. The building will be on your right beside the Old Engineering Building.",
+    "ict": "ICT Building (BLDG 9) is situated in the southwestern quadrant. From the main entrance, proceed straight until you reach the main campus intersection, then turn left. The ICT Building will be on your right after the Administration Building.",
+    "admin": "Administration Building (BLDG 10) is located in the central-western area of campus. From the main entrance, proceed straight until you reach the first major intersection and the building will be visible on your right in the purple Administration Zone.",
+    "cafeteria": "Cafeteria (BLDG 20) is found in the southeastern area of campus. From the main entrance, follow the main road through campus, past the Science Complex, and continue until you reach the Commercial Zone. The Cafeteria will be on your left, marked in red.",
+    "lrc": "Learning Resource Center (BLDG 23) is located in the central area of campus. From the main entrance, follow the main path straight ahead until you reach the second intersection, then turn right. The LRC will be on your left in the Academic Core Zone.",
+    "science": "Science Complex (BLDG 36) is situated in the eastern part of campus. From the main entrance, follow the main road through campus and turn right at the second major intersection. The Science Complex will be ahead on your right.",
+    "student_center": "Student Center & Education Complex (BLDG 44) is located in the eastern section of campus. From the main gate, follow the main road through campus, past the Science Complex, and it will be on your right before reaching the Commercial Zone.",
+    "sports": "Sports Complex (BLDG 49) is situated in the northern area of campus. From the main entrance, take the first right and follow the curved path around the sports field. The Sports Complex will be visible on the north side of the track and field area.",
+    "dormitory": "Dormitory (BLDG 51) is located in the northeastern section of campus in the Residential Zone. From the main entrance, follow the main path through campus, pass the Science Complex, then turn left at the intersection near the Student Center. The Dormitory will be ahead.",
+    "finance": "Finance and Accounting Building (BLDG 14) is located in the central area. From the main entrance, follow the main path until you reach the central square, then proceed north, and the building will be on your left.",
+    "hrm": "HRM Building (BLDG 15) is situated in the central campus area. From the main entrance, follow the main path to the central square, then go northwest, and you'll find the building on your right.",
+    "culinary": "Culinary Building (BLDG 18) is located in the western campus area. From the main entrance, take the first left at the major intersection, then proceed north, and the building will be on your left.",
+    "science_centrum": "Science Centrum Building (BLDG 19) is found in the central campus. From the main entrance, proceed straight ahead to the central square, then continue north, and it will be on your right.",
+    "foods": "Foods Trade Building (BLDG 24) is situated in the eastern side of campus. From the main entrance, head straight, then take the eastern path at the central intersection, and you'll find it on your right.",
+    "education": "Old Education Building (BLDG 35) is located in the central area. From the main entrance, proceed straight to the central square, then head northeast, and the building will be on your left.",
+    "engineering": "Engineering Complex (BLDG 42 & 43) is located in the southeastern area. From the main entrance, head straight, pass the central square, and take the southeastern path to find it on your right.",
+    "technology": "Technology Building (BLDG 47) is found in the northeastern section. From the main entrance, follow the main path to the central square, then take the northeastern path to find it on your left.",
+    "basketball": "Basketball Court is located near the Sports Complex in the northern section of campus.",
+    "tennis": "Tennis Court is situated in the northwestern corner of campus. From the main entrance, head straight, then take the first right to find the tennis courts.",
+    "food_innovation": "Food Innovation Center (BLDG 25 & 26) is located in the eastern section. From the main entrance, proceed straight, pass the central square, and take the eastern path to find it on your left.",
+    "fab_lab": "Fabrication Laboratory (BLDG 48) is found in the northeastern section. From the main entrance, proceed to the central square, then take the northeastern path to find it on your right.",
+    "residences": "Residences (BLDG 53) are situated in the eastern section of campus. From the main entrance, proceed straight, pass the central square, and take the eastern path to find the residences on your right.",
+    "rer_hall": "RER Memorial Hall (BLDG 16) is situated in the western area. From the main entrance, follow the main path and take the first left to find it on your left.",
+    "guard_house": "Guard House (BLDG 21) is located near the southern entrance of the campus on Claro M. Recto Avenue.",
+    "medical": "Old Medical Building (BLDG 27) is found in the central campus area. From the main entrance, proceed to the central square and take the eastern path to find it on your left.",
+    "old_science": "Old Science Building (BLDG 28) is located in the central-eastern section. From the main entrance, proceed to the central square and take the eastern path to find it on your right.",
+    "supply": "Supply Office (BLDG 45) is situated in the eastern section. From the main entrance, follow the main path straight, pass the central square, and continue east to find it on your left.",
+    "faculty_lrc": "Faculty Learning Resource Center (BLDG 50) is located in the northeastern area. From the main entrance, proceed to the central square, then take the northeastern path to find it on your right.",
+    "sped": "SPED Building (BLDG G) is located in the southeastern area. From the main entrance, follow the main path straight, pass the central square, and take the southeastern path to find it on your right.",
+    "map": "To view a physical map of the USTP campus, please visit the Administration Building or the Guard House at the main entrance. Digital maps are available on the official USTP website and at kiosk stations around campus.",
+    "registrar": "The Registrar's Office is located in the Learning Resource Center (LRC) Building 23, on the ground floor. From the main entrance, follow the main path straight ahead until you reach the second intersection, then turn right. The LRC will be on your left in the Academic Core Zone."
+}
+
 # Common FAQs that don't require handbook lookup
 COMMON_FAQS = {
     "when is enrollment": "Enrollment dates are typically announced on the official USTP Facebook page. Please check https://www.facebook.com/USTPcagayan for the most current information.",
@@ -212,16 +249,146 @@ Could you please try rephrasing your question with more specific details?"""
     
     return None
 
+def handle_campus_location_query(query):
+    """Handle queries about campus locations with detailed directions."""
+    query_lower = query.lower().strip()
+    
+    # Common location keywords people might use in their queries
+    buildings = {
+        "administration": ["admin", "administration", "admin building", "administration building", "bldg 10", "building 10"],
+        "arts_culture": ["arts", "culture", "arts and culture", "arts building", "bldg 1", "building 1"],
+        "integrated_tech": ["integrated technology", "integrated tech", "bldg 3", "building 3", "technology building"],
+        "rotc": ["rotc", "rotc building", "bldg 4", "building 4"],
+        "ict": ["ict", "ict building", "bldg 9", "building 9", "information technology", "computer", "it building"],
+        "cafeteria": ["cafeteria", "canteen", "food court", "bldg 20", "building 20", "where to eat", "dining", "lunch"],
+        "lrc": ["lrc", "learning resource center", "library", "bldg 23", "building 23", "resource center"],
+        "science": ["science complex", "science building", "bldg 36", "building 36"],
+        "student_center": ["student center", "education complex", "bldg 44", "building 44"],
+        "sports": ["sports complex", "gym", "gymnasium", "bldg 49", "building 49", "sports center"],
+        "dormitory": ["dorm", "dormitory", "residence hall", "bldg 51", "building 51", "where to stay"],
+        "engineering": ["engineering", "engineering complex", "engineering building", "bldg 42", "building 42", "bldg 43", "building 43"],
+        "registrar": ["registrar", "registrar's office", "registration", "transcript", "records"],
+        "map": ["map", "campus map", "directions", "layout", "overview"]
+    }
+    
+    # ONLY match these explicit location question patterns
+    strict_location_patterns = [
+        "where is", "where are", "where can i find", "how do i get to", 
+        "how to find", "how to get to", "location of", "directions to",
+        "where's the", "where's", "tell me where", "show me where", 
+        "how to reach", "how can i find", "i can't find", "i can not find",
+        "can you tell me where", "need to find", "looking for the location",
+        "i need to locate", "i need to find", "where exactly is", "give me directions to",
+        "need directions to", "i need the location of", "where would i find"
+    ]
+    
+    # More general location-related words, used only in conjunction with building names
+    # and absence of non-location patterns
+    location_related_words = [
+        "located", "situated", "find", "location", "where", "building", 
+        "directions", "map", "address", "place", "area", "room", "floor", 
+        "near", "beside", "next to", "across from"
+    ]
+    
+    # Patterns that strongly suggest the query is NOT about location
+    non_location_patterns = [
+        "report", "contact", "email", "call", "phone", "complain", "file", 
+        "submit", "send", "process", "apply", "requirements", "working hours",
+        "who is", "what does", "when does", "why is", "services", "provide",
+        "function", "job", "role", "responsibility", "office hours", "open",
+        "open hours", "close", "closed", "available", "schedule", "appointment",
+        "document", "form", "payment", "pay", "fee", "cost", "how do i", 
+        "how to", "help me", "assist", "registration", "enroll", "what is the",
+        "how much", "when will", "inquiry", "inquire", "question about",
+        "information about", "who should i", "who do i"
+    ]
+    
+    # First, strictly check if the query contains non-location patterns
+    # These would indicate the query is about something other than finding a location
+    if any(pattern in query_lower for pattern in non_location_patterns):
+        return None
+    
+    # Check if query exactly matches our strict location question patterns
+    # This is the most reliable way to identify a true location question
+    has_strict_location_pattern = any(pattern in query_lower for pattern in strict_location_patterns)
+    
+    if has_strict_location_pattern:
+        # If we have a strict location pattern, look for building references
+        for key, keywords in buildings.items():
+            for keyword in keywords:
+                # Look for the building name in the query
+                if keyword in query_lower:
+                    return CAMPUS_LOCATIONS[key]
+    
+    # If no strict pattern match, check for building name + location word proximity
+    # This catches less explicit location questions
+    building_mentioned = False
+    building_key = None
+    
+    for key, keywords in buildings.items():
+        for keyword in keywords:
+            # Check if the keyword is mentioned as a complete word
+            if (f" {keyword} " in f" {query_lower} " or 
+                query_lower.startswith(f"{keyword} ") or 
+                query_lower.endswith(f" {keyword}")):
+                building_mentioned = True
+                building_key = key
+                # Check if any location words are in close proximity to the building name
+                query_words = query_lower.split()
+                keyword_words = keyword.split()
+                
+                # Find position of the keyword in the query
+                for i in range(len(query_words) - len(keyword_words) + 1):
+                    if ' '.join(query_words[i:i+len(keyword_words)]) == keyword:
+                        # Check words before and after the keyword for location indicators
+                        window_start = max(0, i - 3)
+                        window_end = min(len(query_words), i + len(keyword_words) + 3)
+                        context_window = ' '.join(query_words[window_start:window_end])
+                        
+                        if any(word in context_window for word in location_related_words):
+                            return CAMPUS_LOCATIONS[key]
+    
+    # General campus map or building question (if no specific building but asking about locations)
+    if has_strict_location_pattern and any(word in query_lower for word in ["building", "bldg", "room", "place", "area", "campus", "map"]):
+        return """The USTP campus is organized into several zones:
+        
+- Academic Core Zone (Blue): Contains most teaching buildings including the LRC (Building 23)
+- Sports and Recreation Zone (Light Green): Located in the northern area with the Sports Complex
+- Research Zone (Teal): Located in the eastern section with the Food Innovation Center
+- Administration Zone (Purple): Located in the central-western area with the Admin Building
+- Residential Zone (Yellow): Located in the northeastern section with the Dormitory
+- Commercial Zone (Red): Located in the southeastern area with the Cafeteria
+
+For specific building directions, please ask about a particular building by name or number (e.g., "Where is the ICT Building?" or "How do I find Building 23?").
+
+For a campus map, visit the Guard House at the main entrance or the Administration Building (BLDG 10)."""
+    
+    # Return None if we can't confidently identify this as a location query
+    return None
+
 def handle_special_queries(query):
     """Handle special queries with guided responses."""
     query_lower = query.lower().strip()
     
-    # Check for negative sentiment first
+    # First pass: Check for WiFi or password specific queries
+    # These are high-priority instant responses
+    if "wifi" in query_lower or "password" in query_lower or "internet" in query_lower:
+        wifi_patterns = ["password", "wifi password", "connect to wifi", "internet access"]
+        if any(pattern in query_lower for pattern in wifi_patterns):
+            return COMMON_FAQS["wifi access"]
+    
+    # Second pass: Check for campus location queries
+    # This should only respond to very clear location questions
+    location_response = handle_campus_location_query(query)
+    if location_response:
+        return location_response
+    
+    # Third pass: Check for sentiment/emotional queries
     sentiment_response = detect_sentiment(query_lower)
     if sentiment_response:
         return sentiment_response
     
-    # Greeting and general help with time-based greeting
+    # Fourth pass: Check for greetings and help requests
     if query_lower in ["hello", "hi", "start", "hey", "good morning", "good afternoon", "good evening"]:
         greeting = get_time_greeting()
         return f"""# {greeting}Welcome to CampusGuide AI! 👋
@@ -231,6 +398,7 @@ I can help answer questions about:
 - Student services and organizations
 - Campus facilities and resources
 - Student rights and responsibilities
+- Campus building locations and directions
 
 {random.choice(USAGE_TIPS)}
 
@@ -248,8 +416,9 @@ I'm CampusGuide AI, your USTP Student Handbook assistant. Here are topics I can 
 4. **Student Organizations and Activities** - Information about campus groups
 5. **Student Services** - Available services for students
 6. **USTP Vision, Mission, and Core Values**
+7. **Campus Locations** - How to find buildings and facilities on campus
 
-Try asking specific questions like "What is the grading system?" or "What are the admission requirements?"
+Try asking specific questions like "What is the grading system?", "Where is the ICT Building?", or "What are the admission requirements?"
 """
     
     # Personal state queries
@@ -263,8 +432,9 @@ If you're feeling overwhelmed, consider speaking with the Guidance and Counselin
 For more information, please visit: https://www.facebook.com/ustpgsucdo
 """
     
+    # Fifth pass: Check for specific FAQ patterns with enhanced pattern matching
     # WiFi related queries - Enhanced pattern matching
-    if "wifi" in query_lower or "password" in query_lower or "internet" in query_lower or "connection" in query_lower or "network" in query_lower:
+    if any(word in query_lower for word in ["wifi", "password", "internet", "connection", "network"]):
         # Check for common WiFi question patterns
         wifi_patterns = [
             "what is the wifi", "what's the wifi", "wifi password", "password for wifi", 
@@ -288,19 +458,6 @@ For more information, please visit: https://www.facebook.com/ustpgsucdo
         if any(pattern in query_lower for pattern in enrollment_patterns) or (any(word in query_lower for word in ["enrollment", "enroll", "register", "registration"]) and any(word in query_lower for word in ["when", "how", "where", "date", "schedule", "time", "start"])):
             return COMMON_FAQS["when is enrollment"]
     
-    # Registrar location queries - Enhanced pattern matching
-    if "registrar" in query_lower:
-        # Check for common registrar location question patterns
-        registrar_patterns = [
-            "where is the registrar", "registrar's office", "registrar office", "registrar location",
-            "find the registrar", "registrar's location", "how to get to the registrar",
-            "where can i find the registrar", "looking for the registrar",
-            "tell me where the registrar", "where the registrar is", "registrar located",
-            "where to find registrar", "registrar office located", "where can i find registrar"
-        ]
-        if any(pattern in query_lower for pattern in registrar_patterns) or ("registrar" in query_lower and any(word in query_lower for word in ["where", "located", "location", "find", "office", "place", "building", "room"])):
-            return COMMON_FAQS["where is the registrar"]
-
     # Library hours queries - Enhanced pattern matching
     if "library" in query_lower:
         # Check for common library hours question patterns
@@ -331,12 +488,12 @@ For more information, please visit: https://www.facebook.com/ustpgsucdo
         # Treat as a regular query, not a special one
         pass
     
-    # Standard key-in-query check as fallback
+    # Final pass: Check for any exact matches in our FAQ dictionary
     for key, response in COMMON_FAQS.items():
         if key in query_lower:
             return response
     
-    # Return None if not a special query
+    # Return None if not a special query - will fall back to RAG
     return None
 
 def get_rag_response(query, context_chunks, metadata=None):

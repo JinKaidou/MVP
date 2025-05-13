@@ -35,39 +35,48 @@ FACEBOOK_PAGES = {
 
 # Campus locations dictionary with detailed information about buildings and directions
 CAMPUS_LOCATIONS = {
-    "arts_culture": "Arts and Culture Building (BLDG 1) is located in the northwest area of campus near the sports facilities. From the main entrance, take the first right and follow the path past the tennis courts. The building will be on your left.",
-    "integrated_tech": "Integrated Technology Building (BLDG 3) is found in the western part of campus. From the main entrance on Claro M. Recto Avenue, proceed straight and take the first left turn. The building will be on your right in the Academic Core Zone.",
-    "rotc": "ROTC Building (BLDG 4) is located near the western boundary of campus. From the main gate, go straight and take the first left, then immediate left again. The building will be on your right beside the Old Engineering Building.",
-    "ict": "ICT Building (BLDG 9) is situated in the southwestern quadrant. From the main entrance, proceed straight until you reach the main campus intersection, then turn left. The ICT Building will be on your right after the Administration Building.",
-    "admin": "Administration Building (BLDG 10) is located in the central-western area of campus. From the main entrance, proceed straight until you reach the first major intersection and the building will be visible on your right in the purple Administration Zone.",
-    "cafeteria": "Cafeteria (BLDG 20) is found in the southeastern area of campus. From the main entrance, follow the main road through campus, past the Science Complex, and continue until you reach the Commercial Zone. The Cafeteria will be on your left, marked in red.",
-    "lrc": "Learning Resource Center (BLDG 23) is located in the central area of campus. From the main entrance, follow the main path straight ahead until you reach the second intersection, then turn right. The LRC will be on your left in the Academic Core Zone.",
-    "science": "Science Complex (BLDG 36) is situated in the eastern part of campus. From the main entrance, follow the main road through campus and turn right at the second major intersection. The Science Complex will be ahead on your right.",
-    "student_center": "Student Center & Education Complex (BLDG 44) is located in the eastern section of campus. From the main gate, follow the main road through campus, past the Science Complex, and it will be on your right before reaching the Commercial Zone.",
-    "sports": "Sports Complex (BLDG 49) is situated in the northern area of campus. From the main entrance, take the first right and follow the curved path around the sports field. The Sports Complex will be visible on the north side of the track and field area.",
-    "dormitory": "Dormitory (BLDG 51) is located in the northeastern section of campus in the Residential Zone. From the main entrance, follow the main path through campus, pass the Science Complex, then turn left at the intersection near the Student Center. The Dormitory will be ahead.",
-    "finance": "Finance and Accounting Building (BLDG 14) is located in the central area. From the main entrance, follow the main path until you reach the central square, then proceed north, and the building will be on your left.",
-    "hrm": "HRM Building (BLDG 15) is situated in the central campus area. From the main entrance, follow the main path to the central square, then go northwest, and you'll find the building on your right.",
-    "culinary": "Culinary Building (BLDG 18) is located in the western campus area. From the main entrance, take the first left at the major intersection, then proceed north, and the building will be on your left.",
-    "science_centrum": "Science Centrum Building (BLDG 19) is found in the central campus. From the main entrance, proceed straight ahead to the central square, then continue north, and it will be on your right.",
-    "foods": "Foods Trade Building (BLDG 24) is situated in the eastern side of campus. From the main entrance, head straight, then take the eastern path at the central intersection, and you'll find it on your right.",
-    "education": "Old Education Building (BLDG 35) is located in the central area. From the main entrance, proceed straight to the central square, then head northeast, and the building will be on your left.",
-    "engineering": "Engineering Complex (BLDG 42 & 43) is located in the southeastern area. From the main entrance, head straight, pass the central square, and take the southeastern path to find it on your right.",
-    "technology": "Technology Building (BLDG 47) is found in the northeastern section. From the main entrance, follow the main path to the central square, then take the northeastern path to find it on your left.",
-    "basketball": "Basketball Court is located near the Sports Complex in the northern section of campus.",
-    "tennis": "Tennis Court is situated in the northwestern corner of campus. From the main entrance, head straight, then take the first right to find the tennis courts.",
-    "food_innovation": "Food Innovation Center (BLDG 25 & 26) is located in the eastern section. From the main entrance, proceed straight, pass the central square, and take the eastern path to find it on your left.",
-    "fab_lab": "Fabrication Laboratory (BLDG 48) is found in the northeastern section. From the main entrance, proceed to the central square, then take the northeastern path to find it on your right.",
-    "residences": "Residences (BLDG 53) are situated in the eastern section of campus. From the main entrance, proceed straight, pass the central square, and take the eastern path to find the residences on your right.",
-    "rer_hall": "RER Memorial Hall (BLDG 16) is situated in the western area. From the main entrance, follow the main path and take the first left to find it on your left.",
-    "guard_house": "Guard House (BLDG 21) is located near the southern entrance of the campus on Claro M. Recto Avenue.",
-    "medical": "Old Medical Building (BLDG 27) is found in the central campus area. From the main entrance, proceed to the central square and take the eastern path to find it on your left.",
-    "old_science": "Old Science Building (BLDG 28) is located in the central-eastern section. From the main entrance, proceed to the central square and take the eastern path to find it on your right.",
-    "supply": "Supply Office (BLDG 45) is situated in the eastern section. From the main entrance, follow the main path straight, pass the central square, and continue east to find it on your left.",
-    "faculty_lrc": "Faculty Learning Resource Center (BLDG 50) is located in the northeastern area. From the main entrance, proceed to the central square, then take the northeastern path to find it on your right.",
-    "sped": "SPED Building (BLDG G) is located in the southeastern area. From the main entrance, follow the main path straight, pass the central square, and take the southeastern path to find it on your right.",
+    "arts_culture": "The Arts and Culture Building (ArCU, BLDG 1) is located in the northwestern section of campus near the sports facilities. From the main entrance, take the first right and follow the path past the tennis courts. The building will be on your left. It's in the Auxiliary Services Zone (Gray).",
+    "integrated_tech": "Integrated Technology Building (BLDG 3) is found in the western part of campus. From the main entrance on Claro M. Recto Avenue, proceed straight and take the first left turn. The building will be on your right in the Academic Core Zone (Blue).",
+    "rotc": "ROTC Building (BLDG 4) is located near the western boundary of campus. From the main gate, go straight and take the first left, then immediate left again. The building will be on your right beside the Old Engineering Building. It's in the Academic Core Zone (Blue).",
+    "ict": "The ICT Building (BLDG 9) is situated in the southwestern quadrant of campus. From the main entrance, proceed straight until you reach the main campus intersection, then turn left. The ICT Building will be on your right after the Administration Building. This building houses the College of Information Technology and Computer Studies (CITC) and is in the Academic Core Zone (Blue).",
+    "admin": "Administration Building (BLDG 10) is located in the central-western area of campus. From the main entrance, proceed straight until you reach the first major intersection and the building will be visible on your right in the Administration/Operation Zone (Purple).",
+    "cafeteria": "Cafeteria (BLDG 20) is found in the southeastern area of campus. From the main entrance, follow the main road through campus, past the Science Complex, and continue until you reach the Commercial Zone. The Cafeteria will be on your left, marked in the Commercial Zone (Red).",
+    "lrc": "Learning Resource Center (BLDG 23) is located in the central area of campus. From the main entrance, follow the main path straight ahead until you reach the second intersection, then turn right. The LRC will be on your left in the Academic Core Zone (Blue).",
+    "science": "Science Complex (BLDG 36) is situated in the eastern part of campus. From the main entrance, follow the main road through campus and turn right at the second major intersection. The Science Complex will be ahead on your right. It's in the Administration/Operation Zone (Purple).",
+    "student_center": "Student Center & Education Complex (BLDG 44) is located in the eastern section of campus. From the main gate, follow the main road through campus, past the Science Complex, and it will be on your right before reaching the Commercial Zone. It's in the Academic Core Zone (Blue).",
+    "sports": "Sports Complex (BLDG 49) is situated in the northern area of campus. From the main entrance, take the first right and follow the curved path around the sports field. The Sports Complex will be visible on the north side of the track and field area. It's in the Sports and Recreation Zone (Light Green).",
+    "dormitory": "Dormitory (BLDG 51) is located in the northeastern section of campus in the Residential Zone (Yellow). From the main entrance, follow the main path through campus, pass the Science Complex, then take the northeastern path to find it on your right.",
+    "finance": "Finance and Accounting Building (BLDG 14) is located in the central area. From the main entrance, follow the main path until you reach the central square, then proceed north, and the building will be on your left. It's in the Academic Core Zone (Blue).",
+    "hrm": "HRM Building (BLDG 15) is situated in the central campus area. From the main entrance, follow the main path to the central square, then go northwest, and you'll find the building on your right. It's in the Academic Core Zone (Blue).",
+    "culinary": "Culinary Building (BLDG 18) is located in the western campus area. From the main entrance, take the first left at the major intersection, then proceed north, and the building will be on your left. It's in the Academic Core Zone (Blue).",
+    "science_centrum": "Science Centrum Building (BLDG 19) is found in the central campus. From the main entrance, proceed straight ahead to the central square, then continue north, and it will be on your right. It's in the Academic Core Zone (Blue).",
+    "foods": "Foods Trade Building (BLDG 24) is situated in the eastern side of campus. From the main entrance, head straight, then take the eastern path at the central intersection, and you'll find it on your right. It's in the Academic Core Zone (Blue).",
+    "old_education": "Old Education Building (BLDG 35) is located in the central area. From the main entrance, proceed straight to the central square, then head northeast, and the building will be on your left. It's in the Academic Core Zone (Blue).",
+    "engineering": "Engineering Complex (BLDG 42 & 43) is located in the southeastern area. From the main entrance, head straight, pass the central square, and take the southeastern path to find it on your right. It's in the Academic Core Zone (Blue).",
+    "technology": "Technology Building (BLDG 47) is found in the northeastern section. From the main entrance, follow the main path to the central square, then take the northeastern path to find it on your left. It's in the Academic Core Zone (Blue).",
+    "basketball": "Basketball Court is located near the Sports Complex in the northern section of campus. It's in the Sports and Recreation Zone (Light Green).",
+    "tennis": "Tennis Court is situated in the northwestern corner of campus. From the main entrance, head straight, then take the first right to find the tennis courts. It's in the Sports and Recreation Zone (Light Green).",
+    "food_innovation": "Food Innovation Center (BLDG 25 & 26) is located in the eastern section. From the main entrance, proceed straight, pass the central square, and take the eastern path to find it on your left. It's in the Research Zone (Teal).",
+    "fab_lab": "Fabrication Laboratory (BLDG 48) is found in the northeastern section. From the main entrance, proceed to the central square, then take the northeastern path to find it on your right. It's in the Research Zone (Teal).",
+    "residences": "Residences (BLDG 53) are situated in the eastern section of campus. From the main entrance, proceed straight, pass the central square, and take the eastern path to find the residences on your right. They're in the Residential/Dormitory Zone (Yellow).",
+    "rer_hall": "RER Memorial Hall (BLDG 16) is situated in the western area. From the main entrance, follow the main path and take the first left to find it on your left. It's in the Auxiliary Services Zone (Gray).",
+    "guard_house": "Guard House (BLDG 21) is located near the southern entrance of the campus on Claro M. Recto Avenue. It's in the Auxiliary Services Zone (Gray).",
+    "old_medical": "Old Medical Building (BLDG 27) is found in the central campus area. From the main entrance, proceed to the central square and take the eastern path to find it on your left. It's in the Auxiliary Services Zone (Gray).",
+    "old_science": "Old Science Building (BLDG 28) is located in the central-eastern section. From the main entrance, proceed to the central square and take the eastern path to find it on your right. It's in the Auxiliary Services Zone (Gray).",
+    "supply": "Supply Office (BLDG 45) is situated in the eastern section. From the main entrance, follow the main path straight, pass the central square, and continue east to find it on your left. It's in the Auxiliary Services Zone (Gray).",
+    "faculty_lrc": "Faculty Learning Resource Center (BLDG 50) is located in the northeastern area. From the main entrance, proceed to the central square, then take the northeastern path to find it on your right. It's in the Auxiliary Services Zone (Gray).",
+    "sped": "SPED Building (BLDG G) is located in the southeastern area. From the main entrance, follow the main path straight, pass the central square, and take the southeastern path to find it on your right. It's in the Auxiliary Services Zone (Gray).",
     "map": "To view a physical map of the USTP campus, please visit the Administration Building or the Guard House at the main entrance. Digital maps are available on the official USTP website and at kiosk stations around campus.",
-    "registrar": "The Registrar's Office is located in the Learning Resource Center (LRC) Building 23, on the ground floor. From the main entrance, follow the main path straight ahead until you reach the second intersection, then turn right. The LRC will be on your left in the Academic Core Zone."
+    "registrar": "The Registrar's Office is located in the Learning Resource Center (LRC) Building 23, on the ground floor. From the main entrance, follow the main path straight ahead until you reach the second intersection, then turn right. The LRC will be on your left in the Academic Core Zone (Blue).",
+    "old_engineering": "The Old Engineering Building (BLDG 5) is located beside the ROTC Building in the western section of campus. From the main entrance, proceed straight, take the second left, and it will be directly ahead of you. It's in the Academic Core Zone (Blue).",
+    "sports_field": "The Sports Field and Track are found in the northern section of campus, visible from most areas. From the main entrance, proceed straight, then take the northern path at the central square. It's in the Sports and Recreation Zone (Light Green).",
+    "sump_pit": "The Sump Pit (BLDG 52) is found in the eastern section of campus. From the main entrance, proceed straight, pass the central square, and take the eastern path to find it on your right. It's in the Auxiliary Services Zone (Gray).",
+    "fic_extension": "The FIC Extension (BLDG 54) is located in the eastern area of campus. From the main entrance, follow the main path straight, pass the central square, and take the eastern path to find it on your right. It's in the Auxiliary Services Zone (Gray).",
+    "toilet": "The Toilet facilities (BLDG F) are situated in the northeastern section of campus. From the main entrance, proceed to the central square, then take the northeastern path to find them on your right. They're in the Auxiliary Services Zone (Gray).",
+    "citc": "The College of Information Technology and Computer Studies (CITC) is located in the ICT Building (BLDG 9) in the southwestern quadrant of campus. From the main entrance, proceed straight until you reach the main campus intersection, then turn left. The ICT Building will be on your right after the Administration Building. It's in the Academic Core Zone (Blue).",
+    "cea": "The College of Engineering and Architecture (CEA) is housed in the Engineering Complex (BLDG 42 & 43) in the southeastern area of campus. From the main entrance, head straight, pass the central square, and take the southeastern path to find it on your right. It's in the Academic Core Zone (Blue).",
+    "coed": "The College of Education (COED) is housed in the Education Complex (BLDG 44) in the eastern section of campus. From the main gate, follow the main road through campus, past the Science Complex, and it will be on your right before reaching the Commercial Zone. It's in the Academic Core Zone (Blue).",
+    "cas": "The College of Arts and Sciences (CAS) is primarily located in the Science Complex (BLDG 36) in the eastern part of campus. From the main entrance, follow the main road through campus and turn right at the second major intersection. The Science Complex will be ahead on your right. It's in the Administration/Operation Zone (Purple)."
 }
 
 # Common FAQs that don't require handbook lookup
@@ -89,14 +98,54 @@ USAGE_TIPS = [
 ]
 
 def preprocess_text(text):
-    """Clean and normalize text."""
+    """Clean and normalize text while preserving important context."""
     if not isinstance(text, str):
         return ""
-    # Convert to lowercase and remove special chars
-    text = re.sub(r'[^\w\s]', ' ', text.lower())
+    
+    # Updated preserved terms with the correct abbreviations
+    preserved_terms = {
+        "ICT": "_ICT_MARKER_",
+        "CITC": "_CITC_MARKER_",
+        "LRC": "_LRC_MARKER_",
+        "ROTC": "_ROTC_MARKER_",
+        "NSTP": "_NSTP_MARKER_",
+        "CEA": "_CEA_MARKER_",
+        "ArCU": "_ARCU_MARKER_",
+        "COED": "_COED_MARKER_", 
+        "CAS": "_CAS_MARKER_",
+        "USTP": "_USTP_MARKER_",
+        "FIC": "_FIC_MARKER_",
+        "SPED": "_SPED_MARKER_"
+    }
+    
+    # Preserve building numbers
+    bldg_pattern = re.compile(r'(building|bldg\.?|b\.?)\s*(\d+)', re.IGNORECASE)
+    matches = bldg_pattern.findall(text)
+    building_markers = {}
+    
+    for match in matches:
+        building_num = match[1]
+        marker = f"_BUILDING_{building_num}_MARKER_"
+        building_markers[f"{match[0]} {building_num}"] = marker
+    
+    # Apply all markers to preserve important terms
+    processed_text = text
+    for term, marker in {**preserved_terms, **building_markers}.items():
+        # Case-insensitive replacement but preserve the original casing
+        pattern = re.compile(re.escape(term), re.IGNORECASE)
+        processed_text = pattern.sub(marker, processed_text)
+    
+    # Convert to lowercase and remove special chars with some exceptions
+    processed_text = re.sub(r'[^\w\s\-]', ' ', processed_text.lower())
+    
     # Remove extra whitespace
-    text = re.sub(r'\s+', ' ', text).strip()
-    return text
+    processed_text = re.sub(r'\s+', ' ', processed_text).strip()
+    
+    # Restore the preserved terms
+    for term, marker in {**preserved_terms, **building_markers}.items():
+        processed_text = processed_text.replace(marker.lower(), term.lower())
+    
+    return processed_text
 
 def load_csv_data():
     """Load and preprocess the CSV data."""
@@ -249,17 +298,53 @@ Could you please try rephrasing your question with more specific details?"""
     
     return None
 
+def analyze_query_context(query):
+    """Deeply analyze query context to understand user intent and entities."""
+    query_lower = query.lower().strip()
+    
+    # Extract potential building names and abbreviations that might not be in our dictionary
+    words = query_lower.split()
+    potential_buildings = []
+    
+    # Look for building numbers
+    bldg_number_pattern = re.compile(r'(building|bldg\.?|b\.?)\s*(\d+)', re.IGNORECASE)
+    matches = bldg_number_pattern.findall(query_lower)
+    for match in matches:
+        potential_buildings.append(f"building {match[1]}")
+    
+    # Look for common building abbreviations (3-4 letter acronyms)
+    abbreviation_pattern = re.compile(r'\b([a-z]{2,4})\b\s*(building|bldg|center|complex)?', re.IGNORECASE)
+    matches = abbreviation_pattern.findall(query_lower)
+    for match in matches:
+        if len(match[0]) >= 2:  # Only consider abbreviations with 2+ characters
+            potential_buildings.append(match[0])
+    
+    # Extract query type (question vs statement)
+    is_question = any(q in query_lower for q in ["where", "how", "when", "what", "which", "?"])
+    
+    # Look for specific building-related context
+    context = {
+        "is_question": is_question,
+        "potential_buildings": potential_buildings,
+        "has_location_terms": any(term in query_lower for term in ["locate", "find", "get to", "direction", "where"]),
+    }
+    
+    return context
+
 def handle_campus_location_query(query):
     """Handle queries about campus locations with detailed directions."""
     query_lower = query.lower().strip()
     
+    # Get deeper query context
+    query_context = analyze_query_context(query)
+    
     # Common location keywords people might use in their queries
     buildings = {
         "administration": ["admin", "administration", "admin building", "administration building", "bldg 10", "building 10"],
-        "arts_culture": ["arts", "culture", "arts and culture", "arts building", "bldg 1", "building 1"],
+        "arts_culture": ["arcu", "arts and culture", "arts building", "bldg 1", "building 1", "arcu building"],
         "integrated_tech": ["integrated technology", "integrated tech", "bldg 3", "building 3", "technology building"],
         "rotc": ["rotc", "rotc building", "bldg 4", "building 4"],
-        "ict": ["ict", "ict building", "bldg 9", "building 9", "information technology", "computer", "it building"],
+        "ict": ["ict", "ict building", "bldg 9", "building 9", "information technology", "computer", "it building", "citc", "college of information technology and computer studies"],
         "cafeteria": ["cafeteria", "canteen", "food court", "bldg 20", "building 20", "where to eat", "dining", "lunch"],
         "lrc": ["lrc", "learning resource center", "library", "bldg 23", "building 23", "resource center"],
         "science": ["science complex", "science building", "bldg 36", "building 36"],
@@ -268,8 +353,93 @@ def handle_campus_location_query(query):
         "dormitory": ["dorm", "dormitory", "residence hall", "bldg 51", "building 51", "where to stay"],
         "engineering": ["engineering", "engineering complex", "engineering building", "bldg 42", "building 42", "bldg 43", "building 43"],
         "registrar": ["registrar", "registrar's office", "registration", "transcript", "records"],
-        "map": ["map", "campus map", "directions", "layout", "overview"]
+        "map": ["map", "campus map", "directions", "layout", "overview"],
+        # Add common department/college abbreviations
+        "cea": ["cea", "cea building", "college of engineering and architecture", "engineering and architecture"],
+        "ccs": ["ccs", "ccs building", "college of computer studies", "computer studies"],
+        "cba": ["cba", "cba building", "college of business administration", "business administration"],
+        "coed": ["coed", "coed building", "college of education", "education building"],
+        "cas": ["cas", "cas building", "college of arts and sciences", "arts and sciences"]
     }
+    
+    # Updated location keywords with the correct abbreviations and college names
+    buildings = {
+        "administration": ["admin", "administration", "admin building", "administration building", "bldg 10", "building 10"],
+        "arts_culture": ["arcu", "arts and culture", "arts building", "bldg 1", "building 1", "arcu building"],
+        "integrated_tech": ["integrated technology", "integrated tech", "bldg 3", "building 3", "technology building"],
+        "rotc": ["rotc", "rotc building", "bldg 4", "building 4"],
+        "ict": ["ict", "ict building", "bldg 9", "building 9", "information technology", "computer", "it building", "citc", "college of information technology and computer studies"],
+        "cafeteria": ["cafeteria", "canteen", "food court", "bldg 20", "building 20", "where to eat", "dining", "lunch"],
+        "lrc": ["lrc", "learning resource center", "library", "bldg 23", "building 23", "resource center"],
+        "science": ["science complex", "science building", "bldg 36", "building 36", "old student center"],
+        "student_center": ["student center", "education complex", "bldg 44", "building 44"],
+        "sports": ["sports complex", "gym", "gymnasium", "bldg 49", "building 49", "sports center"],
+        "dormitory": ["dorm", "dormitory", "residence hall", "bldg 51", "building 51", "where to stay"],
+        "engineering": ["engineering", "engineering complex", "engineering building", "bldg 42", "building 42", "bldg 43", "building 43"],
+        "registrar": ["registrar", "registrar's office", "registration", "transcript", "records"],
+        "map": ["map", "campus map", "directions", "layout", "overview"],
+        # Update college abbreviations
+        "cea": ["cea", "cea building", "college of engineering and architecture", "engineering and architecture"],
+        "citc": ["citc", "citc building", "college of information technology and computer studies", "information technology and computer studies"],
+        "coed": ["coed", "coed building", "college of education", "education building"],
+        "cas": ["cas", "cas building", "college of arts and sciences", "arts and sciences"],
+        "old_engineering": ["old engineering", "old engineering building", "bldg 5", "building 5"],
+        "finance": ["finance", "accounting", "finance and accounting", "bldg 14", "building 14"],
+        "hrm": ["hrm", "hrm building", "bldg 15", "building 15"],
+        "culinary": ["culinary", "culinary building", "bldg 18", "building 18"],
+        "science_centrum": ["science centrum", "centrum", "bldg 19", "building 19"],
+        "foods": ["foods", "foods trade", "foods trade building", "bldg 24", "building 24"],
+        "old_education": ["old education", "old education building", "bldg 35", "building 35"],
+        "technology": ["technology", "technology building", "bldg 47", "building 47"],
+        "sports_field": ["sports field", "track", "field", "sports track"],
+        "basketball": ["basketball", "basketball court", "court"],
+        "tennis": ["tennis", "tennis court"],
+        "food_innovation": ["food innovation", "food innovation center", "fic", "bldg 25", "building 25", "bldg 26", "building 26"],
+        "fab_lab": ["fab lab", "fabrication laboratory", "fabrication", "bldg 48", "building 48"],
+        "residences": ["residences", "bldg 53", "building 53"],
+        "rer_hall": ["rer", "rer hall", "rer memorial hall", "bldg 16", "building 16"],
+        "guard_house": ["guard house", "guard", "security", "bldg 21", "building 21"],
+        "old_medical": ["old medical", "medical", "old medical building", "bldg 27", "building 27"],
+        "old_science": ["old science", "old science building", "bldg 28", "building 28"],
+        "supply": ["supply", "supply office", "bldg 45", "building 45"],
+        "faculty_lrc": ["faculty lrc", "faculty learning resource center", "bldg 50", "building 50"],
+        "sump_pit": ["sump pit", "bldg 52", "building 52"],
+        "fic_extension": ["fic extension", "bldg 54", "building 54"],
+        "toilet": ["toilet", "restroom", "bathroom", "bldg f", "building f"],
+        "sped": ["sped", "sped building", "bldg g", "building g"]
+    }
+    
+    # Update CAMPUS_LOCATIONS with the complete information provided by the user
+    # First, update existing entries with any corrections
+    CAMPUS_LOCATIONS["arts_culture"] = "The Arts and Culture Building (ArCU, BLDG 1) is located in the northwestern section of campus near the sports facilities. From the main entrance, take the first right and follow the path past the tennis courts. The building will be on your left. It's in the Auxiliary Services Zone (Gray)."
+    
+    CAMPUS_LOCATIONS["ict"] = "The ICT Building (BLDG 9) is situated in the southwestern quadrant of campus. From the main entrance, proceed straight until you reach the main campus intersection, then turn left. The ICT Building will be on your right after the Administration Building. This building houses the College of Information Technology and Computer Studies (CITC) and is in the Academic Core Zone (Blue)."
+    
+    # Add CITC reference
+    if "citc" not in CAMPUS_LOCATIONS:
+        CAMPUS_LOCATIONS["citc"] = "The College of Information Technology and Computer Studies (CITC) is located in the ICT Building (BLDG 9) in the southwestern quadrant of campus. From the main entrance, proceed straight until you reach the main campus intersection, then turn left. The ICT Building will be on your right after the Administration Building. It's in the Academic Core Zone (Blue)."
+    
+    # Update college references
+    if "cea" in CAMPUS_LOCATIONS:
+        CAMPUS_LOCATIONS["cea"] = "The College of Engineering and Architecture (CEA) is housed in the Engineering Complex (BLDG 42 & 43) in the southeastern area of campus. From the main entrance, head straight, pass the central square, and take the southeastern path to find it on your right."
+    
+    # Add missing buildings that aren't in the CAMPUS_LOCATIONS dictionary
+    new_locations = {
+        "old_engineering": "The Old Engineering Building (BLDG 5) is located beside the ROTC Building in the western section of campus. From the main entrance, proceed straight, take the second left, and it will be directly ahead of you. It's in the Academic Core Zone (Blue).",
+        
+        "sports_field": "The Sports Field and Track are found in the northern section of campus, visible from most areas. From the main entrance, proceed straight, then take the northern path at the central square. It's in the Sports and Recreation Zone (Light Green).",
+        
+        "sump_pit": "The Sump Pit (BLDG 52) is found in the eastern section of campus. From the main entrance, proceed straight, pass the central square, and take the eastern path to find it on your right. It's in the Auxiliary Services Zone (Gray).",
+        
+        "fic_extension": "The FIC Extension (BLDG 54) is located in the eastern area of campus. From the main entrance, follow the main path straight, pass the central square, and take the eastern path to find it on your right. It's in the Auxiliary Services Zone (Gray).",
+        
+        "toilet": "The Toilet facilities (BLDG F) are situated in the northeastern section of campus. From the main entrance, proceed to the central square, then take the northeastern path to find them on your right. They're in the Auxiliary Services Zone (Gray)."
+    }
+    
+    # Update CAMPUS_LOCATIONS with new entries
+    for key, value in new_locations.items():
+        if key not in CAMPUS_LOCATIONS:
+            CAMPUS_LOCATIONS[key] = value
     
     # ONLY match these explicit location question patterns
     strict_location_patterns = [
@@ -303,10 +473,30 @@ def handle_campus_location_query(query):
         "information about", "who should i", "who do i"
     ]
     
+    # First check if the query contains a potential building abbreviation from our analysis
+    for building_abbr in query_context["potential_buildings"]:
+        for key, keywords in buildings.items():
+            if building_abbr.lower() in [k.lower() for k in keywords]:
+                # Check if it's a location question
+                if query_context["is_question"] and query_context["has_location_terms"]:
+                    return CAMPUS_LOCATIONS[key]
+    
     # First, strictly check if the query contains non-location patterns
     # These would indicate the query is about something other than finding a location
     if any(pattern in query_lower for pattern in non_location_patterns):
         return None
+    
+    # Direct building reference check - improved to catch abbreviations like "CEA building"
+    for key, keywords in buildings.items():
+        for keyword in keywords:
+            if keyword in query_lower:
+                # If we have a strict location pattern, immediately return the location
+                if any(pattern in query_lower for pattern in strict_location_patterns):
+                    return CAMPUS_LOCATIONS[key]
+                
+                # If no explicit question pattern but still has location words, could be implicit
+                if any(word in query_lower for word in location_related_words):
+                    return CAMPUS_LOCATIONS[key]
     
     # Check if query exactly matches our strict location question patterns
     # This is the most reliable way to identify a true location question
@@ -347,6 +537,14 @@ def handle_campus_location_query(query):
                         
                         if any(word in context_window for word in location_related_words):
                             return CAMPUS_LOCATIONS[key]
+    
+    # If the query is just "CEA building" or similar - handle these direct references
+    query_words = query_lower.split()
+    if len(query_words) <= 3:  # Short queries like "CEA building" or "where's CCS"
+        for key, keywords in buildings.items():
+            for keyword in keywords:
+                if keyword in query_lower:
+                    return CAMPUS_LOCATIONS[key]
     
     # General campus map or building question (if no specific building but asking about locations)
     if has_strict_location_pattern and any(word in query_lower for word in ["building", "bldg", "room", "place", "area", "campus", "map"]):
@@ -535,10 +733,15 @@ For urgent matters, please contact the relevant office directly or check the UST
         context_text = ""
         for i, chunk in enumerate(context_chunks[:5]):
             context_text += f"\n\n[CHUNK {i+1}]\n{chunk}"
-        
-        # Prepare improved RAG prompt for better formatting and accuracy
-        prompt = f"""You are CampusGuide AI, a helpful assistant exclusively for USTP (University of Science and Technology of the Philippines) students.
-Your knowledge comes from the USTP Student Handbook. You must follow these guidelines carefully:
+            
+        # Analyze query for better understanding
+        query_analysis = analyze_query_intent(query)
+        query_type = query_analysis["query_type"]
+        focus_areas = query_analysis["focus_areas"]
+            
+        # Create a system prompt that helps the model better understand how to respond
+        system_prompt = """You are CampusGuide AI, a helpful assistant exclusively for USTP (University of Science and Technology of the Philippines) students.
+Your knowledge comes from the USTP Student Handbook. Follow these guidelines carefully:
 
 1. ONLY use information from the provided handbook context
 2. If the handbook doesn't contain the answer, say "I don't have that information in the Student Handbook."
@@ -546,7 +749,40 @@ Your knowledge comes from the USTP Student Handbook. You must follow these guide
 4. Present information in a structured, easy-to-read format
 5. Use markdown for formatting (headings, lists, emphasis)
 6. For procedures or requirements, always present them as numbered steps
-7. At the end of your response, if appropriate for the query, add: "For more information and updates, please visit the official USTP Facebook page: https://www.facebook.com/ustpofficial"
+7. At the end of your response, if appropriate for the query, add a relevant USTP Facebook page link
+8. Be direct and responsive - address exactly what was asked"""
+        
+        # Customize the prompt based on query analysis
+        if query_type == "location":
+            system_prompt += """
+9. For location questions, include specific directions with landmark references
+10. Mention which campus zone (color-coded area) the location is in
+11. Be precise about building numbers"""
+        elif query_type == "procedure":
+            system_prompt += """
+9. For procedure questions, present steps in a clear, numbered format
+10. Include any deadlines, requirements, or forms needed
+11. Specify where/who to contact for each step"""
+        elif query_type == "policy":
+            system_prompt += """
+9. For policy questions, cite specific handbook sections
+10. Explain the rationale and implications when possible
+11. Clarify any conditions or exceptions to the policy"""
+        
+        # Focus area customization
+        focus_instructions = {
+            "academic": "When discussing academic matters, include grading policies, class attendance, and academic requirements.",
+            "administrative": "For administrative topics, mention relevant offices, contact methods, and processing times.",
+            "student_life": "When covering student life, emphasize student rights, responsibilities, and available resources.",
+            "facilities": "When describing facilities, mention operating hours, access procedures, and usage policies."
+        }
+        
+        for area in focus_areas:
+            if area in focus_instructions:
+                system_prompt += f"\n• {focus_instructions[area]}"
+        
+        # Prepare improved RAG prompt for better formatting and accuracy
+        prompt = f"""{system_prompt}
 
 Below is the relevant information from the handbook:
 ---
@@ -615,6 +851,56 @@ For lists and procedures, use proper numbered or bulleted markdown formatting.""
         else:
             return f"I don't have information about that in the Student Handbook.\n\n{tip}"
 
+def analyze_query_intent(query):
+    """Analyzes the query to determine its type and focus areas."""
+    query_lower = query.lower().strip()
+    
+    # Determine query type
+    query_type = "general"
+    
+    # Check for location queries
+    location_indicators = ["where", "location", "find", "building", "office", "campus", "room", "area"]
+    if any(indicator in query_lower for indicator in location_indicators):
+        query_type = "location"
+    
+    # Check for procedure queries
+    procedure_indicators = ["how to", "how do i", "steps", "process", "procedure", "apply", "register", "submit", "enroll"]
+    if any(indicator in query_lower for indicator in procedure_indicators):
+        query_type = "procedure"
+    
+    # Check for policy queries
+    policy_indicators = ["policy", "rule", "regulation", "allow", "permit", "prohibited", "requirement", "code of conduct"]
+    if any(indicator in query_lower for indicator in policy_indicators):
+        query_type = "policy"
+    
+    # Determine focus areas
+    focus_areas = []
+    
+    # Academic focus
+    academic_indicators = ["class", "course", "grade", "academic", "subject", "degree", "thesis", "study", "faculty", "professor", "instructor", "exam", "test"]
+    if any(indicator in query_lower for indicator in academic_indicators):
+        focus_areas.append("academic")
+    
+    # Administrative focus
+    administrative_indicators = ["form", "office", "document", "deadline", "submission", "request", "administration", "requirement", "application", "enroll", "register", "payment", "fee"]
+    if any(indicator in query_lower for indicator in administrative_indicators):
+        focus_areas.append("administrative")
+    
+    # Student life focus
+    student_life_indicators = ["organization", "club", "activity", "event", "dormitory", "housing", "dorm", "residence", "cafeteria", "food", "service", "scholarship", "financial", "stipend"]
+    if any(indicator in query_lower for indicator in student_life_indicators):
+        focus_areas.append("student_life")
+    
+    # Facilities focus
+    facilities_indicators = ["library", "gym", "laboratory", "lab", "computer", "internet", "wifi", "facility", "room", "building", "sports", "equipment"]
+    if any(indicator in query_lower for indicator in facilities_indicators):
+        focus_areas.append("facilities")
+    
+    return {
+        "query_type": query_type,
+        "focus_areas": focus_areas
+    }
+
 def get_response_from_query(query, top_k=6):
     """Get response from the CSV data based on the query."""
     global csv_data, vectorizer, tfidf_matrix, content_column
@@ -623,8 +909,42 @@ def get_response_from_query(query, top_k=6):
         return "I'm still loading my knowledge base. Please try again in a moment."
     
     try:
+        # First check for any direct location queries which we want to handle specially 
+        location_response = handle_campus_location_query(query)
+        if location_response:
+            return location_response
+            
+        # Check for any special queries before using the vector search
+        special_response = handle_special_queries(query)
+        if special_response:
+            return special_response
+            
+        # Create expanded query with additional context if needed
+        expanded_query = query
+        
+        # Expand abbreviations in the query to improve search results
+        abbr_expansions = {
+            "ict": "information and communications technology ict",
+            "citc": "college of information technology and computer studies citc",
+            "lrc": "learning resource center lrc library",
+            "rotc": "reserve officers training corps rotc",
+            "nstp": "national service training program nstp",
+            "cea": "college of engineering and architecture cea",
+            "arcu": "arts and culture building arcu",
+            "coed": "college of education coed",
+            "cas": "college of arts and sciences cas",
+            "fic": "food innovation center fic"
+        }
+        
+        # Check if query contains any abbreviations
+        query_lower = query.lower()
+        for abbr, expansion in abbr_expansions.items():
+            if abbr in query_lower:
+                expanded_query = f"{query} {expansion}"
+                break
+        
         # Preprocess the query
-        processed_query = preprocess_text(query)
+        processed_query = preprocess_text(expanded_query)
         
         # Transform the query using the vectorizer
         query_vector = vectorizer.transform([processed_query])
@@ -637,7 +957,19 @@ def get_response_from_query(query, top_k=6):
         
         # Check if we have relevant responses - lower threshold for better recall
         if similarity_scores[top_indices[0]] < 0.03:
-            return "I don't have specific information about that in the Student Handbook. Can you please rephrase your question or ask about a different topic?"
+            # Try to offer a helpful suggestion for a better query
+            query_words = query_lower.split()
+            suggestion = ""
+            
+            # Suggest more specific queries if the query is too short
+            if len(query_words) < 3:
+                suggestion = "Please try asking a more specific question. "
+                
+            # Suggest removing special characters if present
+            if re.search(r'[^\w\s]', query):
+                suggestion += "Try removing special characters from your query. "
+            
+            return f"I don't have specific information about that in the Student Handbook. {suggestion}Can you please rephrase your question or ask about a different topic?"
         
         # Create context chunks for RAG
         context_chunks = []

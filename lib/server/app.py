@@ -76,7 +76,9 @@ CAMPUS_LOCATIONS = {
     "citc": "The College of Information Technology and Computer Studies (CITC) is located in the ICT Building (BLDG 9) in the southwestern quadrant of campus. From the main entrance, proceed straight until you reach the main campus intersection, then turn left. The ICT Building will be on your right after the Administration Building. It's in the Academic Core Zone (Blue).",
     "cea": "The College of Engineering and Architecture (CEA) is housed in the Engineering Complex (BLDG 42 & 43) in the southeastern area of campus. From the main entrance, head straight, pass the central square, and take the southeastern path to find it on your right. It's in the Academic Core Zone (Blue).",
     "coed": "The College of Education (COED) is housed in the Education Complex (BLDG 44) in the eastern section of campus. From the main gate, follow the main road through campus, past the Science Complex, and it will be on your right before reaching the Commercial Zone. It's in the Academic Core Zone (Blue).",
-    "cas": "The College of Arts and Sciences (CAS) is primarily located in the Science Complex (BLDG 36) in the eastern part of campus. From the main entrance, follow the main road through campus and turn right at the second major intersection. The Science Complex will be ahead on your right. It's in the Administration/Operation Zone (Purple)."
+    "cas": "The College of Arts and Sciences (CAS) is primarily located in the Science Complex (BLDG 36) in the eastern part of campus. From the main entrance, follow the main road through campus and turn right at the second major intersection. The Science Complex will be ahead on your right. It's in the Administration/Operation Zone (Purple).",
+    "pat_avr": "The PAT-AVR (Physics, Architecture and Technology Audio-Visual Room) is located in the College of Engineering and Architecture (CEA) Building (Buildings 42 & 43) in the southeastern area of campus. From the main entrance, head straight, pass the central square, and take the southeastern path to find it on your right. This multi-purpose AVR is commonly used for presentations, seminars, and college activities in the Academic Core Zone (Blue).",
+    "ict_avr": "The ICT-AVR (Information and Communications Technology Audio-Visual Room) is located in the ICT Building (BLDG 9) in the southwestern quadrant of campus. From the main entrance, proceed straight until you reach the main campus intersection, then turn left. The ICT Building will be on your right after the Administration Building. The AVR is on the second floor and is commonly used for IT-related presentations and activities. It's in the Academic Core Zone (Blue)."
 }
 
 # Common FAQs that don't require handbook lookup
@@ -387,7 +389,9 @@ def handle_campus_location_query(query):
         "fic_extension": ["fic extension", "bldg 54", "building 54"],
         "toilet": ["toilet", "restroom", "bathroom", "bldg f", "building f"],
         "sped": ["sped", "sped building", "bldg g", "building g"],
-        "science_complex_41": ["csm", "college of science and mathematics", "bldg 41", "building 41"]
+        "science_complex_41": ["csm", "college of science and mathematics", "bldg 41", "building 41"],
+        "pat_avr": ["pat-avr", "pat avr", "physics avr", "architecture avr", "technology avr", "cea avr", "engineering avr"],
+        "ict_avr": ["ict-avr", "ict avr", "information technology avr", "computer avr", "citc avr"]
     }
     
     # Update CAMPUS_LOCATIONS with the complete information provided by the user
@@ -606,13 +610,49 @@ Try asking specific questions like "What is the grading system?", "Where is the 
     
     # Personal state queries
     if query_lower in ["i am tired", "tired", "stressed", "stressed out"]:
-        return """# USTP Student Support Information
+        # Choose a random library to recommend from the available buildings
+        libraries = {
+            "LRC": "The Learning Resource Center (LRC, Building 23) has quiet study spaces and comfortable seating where you can relax and recharge. From the main entrance, follow the main path straight ahead until you reach the second intersection, then turn right. The LRC will be on your left in the Academic Core Zone (Blue).",
+            "COT": "The College of Technology (COT, Building 47) library provides a peaceful environment away from the busy areas of campus. Located in the northeastern section, it has comfortable seating and good lighting. From the main entrance, follow the main path to the central square, then take the northeastern path to find it on your left.",
+            "CEA": "The College of Engineering and Architecture (CEA) library in the Engineering Complex (Buildings 42 & 43) offers a calming atmosphere with study carrels and lounge areas. Located in the southeastern area, it's a great place to take a break and recharge. From the main entrance, head straight, pass the central square, and take the southeastern path to find it on your right.",
+            "CSM": "The College of Science and Mathematics (CSM) library in Building 41 provides a serene environment with natural lighting and comfortable seating. Located in the eastern part of campus, it's perfect for relaxing while surrounded by books. From the main entrance, follow the main road through campus, past the central square, and take the eastern path to find it on your right."
+        }
+        
+        # Select a random library
+        library_key = random.choice(list(libraries.keys()))
+        library_info = libraries[library_key]
+        
+        return f"""# Need a Break? Visit the {library_key} Library
 
-I understand student life can be demanding. While the handbook doesn't specifically address feeling tired or stressed, I can guide you to relevant student services mentioned in the handbook.
+I understand student life can be demanding. When you're feeling tired, sometimes a change of environment can help:
 
-If you're feeling overwhelmed, consider speaking with the Guidance and Counseling Services.
+{library_info}
 
-For more information, please visit: https://www.facebook.com/ustpgsucdo
+This quiet space is perfect for:
+- Taking a short break from a busy schedule
+- Finding a comfortable spot to relax and recharge
+- Reading in a peaceful environment
+- Having a quiet moment to yourself
+
+If you're feeling overwhelmed beyond needing a short break, consider speaking with the Guidance and Counseling Services: https://www.facebook.com/ustpgsucdo
+"""
+    
+    # Handle hungry queries
+    elif any(word in query_lower for word in ["hungry", "food", "eat", "i am hungry", "starving", "need to eat", "want food"]):
+        cafeteria_info = CAMPUS_LOCATIONS["cafeteria"]
+        return f"""# Hungry? Head to the Cafeteria!
+
+{cafeteria_info}
+
+The cafeteria (Building 20) offers a variety of food options to satisfy your hunger:
+- Full meals
+- Snacks and quick bites
+- Beverages and refreshments
+- Affordable student-friendly prices
+
+There are also several food stalls around campus that offer different food options.
+
+Typical cafeteria hours are from 7:00 AM to 7:00 PM on weekdays, but some food stalls may have different operating hours.
 """
     
     # Fifth pass: Check for specific FAQ patterns with enhanced pattern matching

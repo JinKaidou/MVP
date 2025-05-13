@@ -14,13 +14,13 @@ class AIService {
       const bool useLocalEmulator = true; // Change to false for production
 
       if (useLocalEmulator) {
-        return 'http://10.0.2.2:5000/api'; // Android emulator
+        return 'http://10.0.2.2:8000/api'; // Android emulator
       } else {
         return 'https://campus-guide-ai.onrender.com/api'; // Replace with your deployed server
       }
     } else {
       // iOS or other platforms
-      return 'http://localhost:5000/api';
+      return 'http://localhost:8000/api';
     }
   }
 
@@ -28,28 +28,68 @@ class AIService {
     print('Sending to: $baseUrl/chat');
     print('Message content: $message');
 
-    try {
-      final response = await http
-          .post(
-            Uri.parse('$baseUrl/chat'),
-            headers: {'Content-Type': 'application/json'},
-            body: jsonEncode({'message': message}),
-          )
-          .timeout(const Duration(seconds: 30));
-
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        return data['response'];
-      } else {
-        throw Exception('Failed to get response: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Error occurred: $e');
-      return "I'm having trouble connecting to the server. Please check your connection and try again.";
+    // Handle empty messages
+    if (message.trim().isEmpty) {
+      return "Please enter a question about the USTP Student Handbook.";
     }
+
+    // Maximum retries
+    const maxRetries = 2;
+    int retryCount = 0;
+
+    while (retryCount <= maxRetries) {
+      try {
+        final response = await http
+            .post(
+              Uri.parse('$baseUrl/chat'),
+              headers: {'Content-Type': 'application/json'},
+              body: jsonEncode({'message': message}),
+            )
+            .timeout(const Duration(
+                seconds: 45)); // Longer timeout for LLM processing
+
+        print('Response status: ${response.statusCode}');
+
+        // Log truncated response for debugging
+        final responsePreview = response.body.length > 100
+            ? '${response.body.substring(0, 100)}...'
+            : response.body;
+        print('Response preview: $responsePreview');
+
+        if (response.statusCode == 200) {
+          final data = jsonDecode(response.body);
+          return data['response'];
+        } else if (response.statusCode == 202) {
+          // Handle "still loading" status
+          retryCount++;
+          if (retryCount > maxRetries) {
+            return "The server is still initializing. Please try again in a moment.";
+          }
+          // Wait before retrying
+          await Future.delayed(Duration(seconds: 3));
+          continue;
+        } else {
+          throw Exception('Failed to get response: ${response.statusCode}');
+        }
+      } catch (e) {
+        print('Error occurred: $e');
+        retryCount++;
+
+        // If we've reached max retries, return error message
+        if (retryCount > maxRetries) {
+          if (e.toString().contains('timeout')) {
+            return "The request timed out. The server might be processing a complex query or under heavy load.";
+          }
+          return "I'm having trouble connecting to the server. Please check your connection and try again.";
+        }
+
+        // Wait before retrying
+        await Future.delayed(Duration(seconds: 2));
+      }
+    }
+
+    // Fallback message if we somehow exit the loop
+    return "Something went wrong. Please try again later.";
   }
 
   Future<void> resetConversation() async {

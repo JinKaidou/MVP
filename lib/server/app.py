@@ -173,12 +173,21 @@ def get_rag_response(query, context_chunks, metadata=None):
         if metadata and isinstance(metadata, list):
             metadata_str = "Relevant sections: " + ", ".join(metadata[:3])
         
-        # Join context chunks
-        context_text = "\n\n".join(context_chunks[:5])  # Limit to top 5 chunks to avoid token limits
+        # Join context chunks with clear separators
+        context_text = ""
+        for i, chunk in enumerate(context_chunks[:5]):
+            context_text += f"\n\n[CHUNK {i+1}]\n{chunk}"
         
-        # Prepare RAG prompt
-        prompt = f"""You are CampusGuide AI, a helpful assistant for USTP (University of Science and Technology of the Philippines) students.
-Your knowledge comes from the USTP Student Handbook.
+        # Prepare improved RAG prompt for better formatting and accuracy
+        prompt = f"""You are CampusGuide AI, a helpful assistant exclusively for USTP (University of Science and Technology of the Philippines) students.
+Your knowledge comes from the USTP Student Handbook. You must follow these guidelines carefully:
+
+1. ONLY use information from the provided handbook context
+2. If the handbook doesn't contain the answer, say "I don't have that information in the Student Handbook."
+3. NEVER make up information not present in the context
+4. Present information in a structured, easy-to-read format
+5. Use markdown for formatting (headings, lists, emphasis)
+6. For procedures or requirements, always present them as numbered steps
 
 Below is the relevant information from the handbook:
 ---
@@ -187,11 +196,10 @@ Below is the relevant information from the handbook:
 
 {metadata_str}
 
-Question: {query}
+Student Question: {query}
 
-Provide a clear, accurate, and well-formatted answer based ONLY on the information above.
-If the information doesn't contain the answer, say: "I don't have that information in the Student Handbook."
-Format your answer in markdown with proper sections and bullet points where appropriate."""
+Provide a comprehensive, well-formatted answer based ONLY on the handbook information above.
+For lists and procedures, use proper numbered or bulleted markdown formatting."""
         
         # Query Ollama with the RAG prompt
         response = query_ollama(prompt)
@@ -212,7 +220,7 @@ Format your answer in markdown with proper sections and bullet points where appr
         else:
             return "I don't have information about that in the Student Handbook."
 
-def get_response_from_query(query, top_k=5):
+def get_response_from_query(query, top_k=6):
     """Get response from the CSV data based on the query."""
     global csv_data, vectorizer, tfidf_matrix, content_column
     
@@ -232,8 +240,8 @@ def get_response_from_query(query, top_k=5):
         # Get the top K most similar documents
         top_indices = similarity_scores.argsort()[-top_k:][::-1]
         
-        # Check if we have relevant responses
-        if similarity_scores[top_indices[0]] < 0.05:
+        # Check if we have relevant responses - lower threshold for better recall
+        if similarity_scores[top_indices[0]] < 0.03:
             return "I don't have specific information about that in the Student Handbook. Can you please rephrase your question or ask about a different topic?"
         
         # Create context chunks for RAG
@@ -241,7 +249,7 @@ def get_response_from_query(query, top_k=5):
         section_info = []
         
         for idx in top_indices:
-            if similarity_scores[idx] > 0.05:  # Only include somewhat relevant results
+            if similarity_scores[idx] > 0.03:  # Only include somewhat relevant results
                 # Get content
                 content = str(csv_data.iloc[idx][content_column])
                 

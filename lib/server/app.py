@@ -10,6 +10,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import random
+from datetime import datetime  # For time-based greetings
 
 app = Flask(__name__)
 CORS(app)
@@ -21,6 +22,34 @@ tfidf_matrix = None
 index_ready = False
 content_column = None  # Will be determined automatically
 OLLAMA_URL = "http://localhost:11434/api/generate"  # Default Ollama API URL
+
+# Facebook page links dictionary
+FACEBOOK_PAGES = {
+    "main": "https://www.facebook.com/USTPcagayan",
+    "admission": "https://www.facebook.com/USTPAdScho",
+    "student_affairs": "https://www.facebook.com/ustposacdo",
+    "registrar": "https://www.facebook.com/registrarcdo",
+    "library": "https://www.facebook.com/UstpLibrary",
+    "guidance": "https://www.facebook.com/ustpgsucdo"
+}
+
+# Common FAQs that don't require handbook lookup
+COMMON_FAQS = {
+    "when is enrollment": "Enrollment dates are typically announced on the official USTP Facebook page. Please check https://www.facebook.com/USTPcagayan for the most current information.",
+    "where is the registrar": "The Registrar's Office is located on Building 23 - LRC. For more information, contact them through https://www.facebook.com/registrarcdo",
+    "library hours": "For current library hours and services, please visit the USTP Library Facebook page: https://www.facebook.com/UstpLibrary",
+    "wifi access": "The current password for USTP WiFi is: [IloveUSTP!] for more information about campus WiFi access and IT services, please contact the IT department or visit the main USTP page: https://www.facebook.com/USTPcagayan",
+    "lost and found": "Lost and found items are usually managed by the Office of Student Affairs. Please check with their Facebook page: https://www.facebook.com/ustposacdo"
+}
+
+# Usage tips to help users get better responses
+USAGE_TIPS = [
+    "💡 **Tip:** Ask specific questions for better answers (e.g., 'What is the grading system?' instead of 'Tell me about grades').",
+    "💡 **Tip:** You can ask about specific sections of the handbook like 'What does the handbook say about student organizations?'",
+    "💡 **Tip:** If my answer isn't helpful, try rephrasing your question with more details.",
+    "💡 **Tip:** I work best with clear, direct questions about USTP policies and procedures.",
+    "💡 **Tip:** You can ask follow-up questions to get more specific information about a topic."
+]
 
 def preprocess_text(text):
     """Clean and normalize text."""
@@ -153,32 +182,146 @@ def query_ollama(prompt, model="mistral"):
         print(f"Error querying Ollama: {e}")
         return None
 
+def get_time_greeting():
+    """Returns a time-appropriate greeting based on current hour."""
+    hour = datetime.now().hour
+    if 5 <= hour < 12:
+        return "Good morning! "
+    elif 12 <= hour < 17:
+        return "Good afternoon! "
+    else:
+        return "Good evening! "
+
+def detect_sentiment(query):
+    """Detects negative sentiment in user queries and provides supportive responses."""
+    query_lower = query.lower()
+    
+    # Detect frustration or negative emotions
+    negative_terms = ["frustrated", "annoyed", "angry", "upset", "terrible", 
+                      "awful", "worst", "bad experience", "complaint", "stupid", 
+                      "useless", "not helpful", "doesn't work"]
+    
+    if any(term in query_lower for term in negative_terms):
+        return """I understand this might be frustrating. Let me try to help you better.
+
+For immediate assistance with urgent matters, please contact the relevant office directly:
+- Student Affairs: https://www.facebook.com/ustposacdo
+- Guidance Office: https://www.facebook.com/ustpgsucdo
+
+Could you please try rephrasing your question with more specific details?"""
+    
+    return None
+
+def handle_special_queries(query):
+    """Handle special queries with guided responses."""
+    query_lower = query.lower().strip()
+    
+    # Check for negative sentiment first
+    sentiment_response = detect_sentiment(query_lower)
+    if sentiment_response:
+        return sentiment_response
+    
+    # Greeting and general help with time-based greeting
+    if query_lower in ["hello", "hi", "start", "hey", "good morning", "good afternoon", "good evening"]:
+        greeting = get_time_greeting()
+        return f"""# {greeting}Welcome to CampusGuide AI! 👋
+        
+I can help answer questions about:
+- Academic policies and requirements
+- Student services and organizations
+- Campus facilities and resources
+- Student rights and responsibilities
+
+{random.choice(USAGE_TIPS)}
+
+How can I assist you today?"""
+    
+    # Help command
+    if query_lower in ["help", "help me", "i need help", "what can you do"]:
+        return """# How I Can Help You
+        
+I'm CampusGuide AI, your USTP Student Handbook assistant. Here are topics I can provide information about:
+
+1. **Academic Regulations** - Admission, registration, grading system, attendance
+2. **Student Rights** - Rights and responsibilities as outlined in the handbook
+3. **Student Code of Conduct** - Rules and expectations for USTP students
+4. **Student Organizations and Activities** - Information about campus groups
+5. **Student Services** - Available services for students
+6. **USTP Vision, Mission, and Core Values**
+
+Try asking specific questions like "What is the grading system?" or "What are the admission requirements?"
+"""
+    
+    # Personal state queries
+    if query_lower in ["i am tired", "tired", "stressed", "stressed out"]:
+        return """# USTP Student Support Information
+
+I understand student life can be demanding. While the handbook doesn't specifically address feeling tired or stressed, I can guide you to relevant student services mentioned in the handbook.
+
+If you're feeling overwhelmed, consider speaking with the Guidance and Counseling Services.
+
+For more information, please visit: https://www.facebook.com/ustpgsucdo
+"""
+    
+    # Check for common FAQs
+    for key, response in COMMON_FAQS.items():
+        if key in query_lower:
+            return response
+    
+    # Return None if not a special query
+    return None
+
 def get_rag_response(query, context_chunks, metadata=None):
     """Use Ollama to generate a RAG response based on retrieved context."""
     try:
         # Check if Ollama is running and mistral is available
         ollama_available = check_ollama()
         
+        # Handle special queries first before checking Ollama
+        special_response = handle_special_queries(query)
+        if special_response:
+            return special_response
+        
         # If Ollama isn't available, fall back to a template-based response
         if not ollama_available:
-            # Simple templated response as fallback
+            # System status message for technical difficulties
             if context_chunks:
-                response = f"Based on the USTP Student Handbook:\n\n{' '.join(context_chunks[:3])}"
+                response = f"""⚠️ I'm currently experiencing technical difficulties with my AI system. Here's the basic information I found:
+
+{' '.join(context_chunks[:3])}
+
+For more detailed assistance, please contact the relevant office directly."""
                 return response
             else:
-                return "I don't have information about that in the Student Handbook."
+                # Add a random usage tip for empty results
+                tip = random.choice(USAGE_TIPS)
+                return f"""⚠️ I'm currently experiencing technical difficulties with my AI system and couldn't find information about your query.
+
+{tip}
+
+For urgent matters, please contact the relevant office directly or check the USTP Facebook page: https://www.facebook.com/USTPcagayan"""
         
         # Prepare metadata string
         metadata_str = ""
         if metadata and isinstance(metadata, list):
             metadata_str = "Relevant sections: " + ", ".join(metadata[:3])
         
-        # Join context chunks
-        context_text = "\n\n".join(context_chunks[:5])  # Limit to top 5 chunks to avoid token limits
+        # Join context chunks with clear separators
+        context_text = ""
+        for i, chunk in enumerate(context_chunks[:5]):
+            context_text += f"\n\n[CHUNK {i+1}]\n{chunk}"
         
-        # Prepare RAG prompt
-        prompt = f"""You are CampusGuide AI, a helpful assistant for USTP (University of Science and Technology of the Philippines) students.
-Your knowledge comes from the USTP Student Handbook.
+        # Prepare improved RAG prompt for better formatting and accuracy
+        prompt = f"""You are CampusGuide AI, a helpful assistant exclusively for USTP (University of Science and Technology of the Philippines) students.
+Your knowledge comes from the USTP Student Handbook. You must follow these guidelines carefully:
+
+1. ONLY use information from the provided handbook context
+2. If the handbook doesn't contain the answer, say "I don't have that information in the Student Handbook."
+3. NEVER make up information not present in the context
+4. Present information in a structured, easy-to-read format
+5. Use markdown for formatting (headings, lists, emphasis)
+6. For procedures or requirements, always present them as numbered steps
+7. At the end of your response, if appropriate for the query, add: "For more information and updates, please visit the official USTP Facebook page: https://www.facebook.com/ustpofficial"
 
 Below is the relevant information from the handbook:
 ---
@@ -187,18 +330,52 @@ Below is the relevant information from the handbook:
 
 {metadata_str}
 
-Question: {query}
+Student Question: {query}
 
-Provide a clear, accurate, and well-formatted answer based ONLY on the information above.
-If the information doesn't contain the answer, say: "I don't have that information in the Student Handbook."
-Format your answer in markdown with proper sections and bullet points where appropriate."""
+Provide a comprehensive, well-formatted answer based ONLY on the handbook information above.
+For lists and procedures, use proper numbered or bulleted markdown formatting."""
         
         # Query Ollama with the RAG prompt
         response = query_ollama(prompt)
         
         if not response:
-            # Fallback if Ollama fails
-            return f"Based on the USTP Student Handbook:\n\n{context_chunks[0]}"
+            # Fallback if Ollama fails, add usage tip
+            tip = random.choice(USAGE_TIPS)
+            return f"Based on the USTP Student Handbook:\n\n{context_chunks[0]}\n\n{tip}"
+        
+        # Add suggested follow-up questions based on topic
+        query_lower = query.lower()
+        if "admission" in query_lower or "enroll" in query_lower:
+            response += "\n\n**Related questions you might ask:**\n- What are the admission requirements?\n- How do I apply for a scholarship?\n- What documents do I need for enrollment?"
+        elif "grade" in query_lower or "academic" in query_lower:
+            response += "\n\n**Related questions you might ask:**\n- What is the grading system?\n- What happens if I fail a subject?\n- What are the retention policies?"
+        elif "organization" in query_lower or "club" in query_lower:
+            response += "\n\n**Related questions you might ask:**\n- How do I join a student organization?\n- What student organizations are available?\n- What are the requirements for establishing a new organization?"
+        
+        # Add relevant Facebook page link if not already included in the response
+        response_lower = response.lower()
+        if not "facebook.com" in response_lower:
+            # Determine which Facebook page to include based on query keywords
+            fb_link = FACEBOOK_PAGES["main"]  # Default to main page
+            
+            if any(word in query_lower for word in ["admission", "application", "apply", "enroll"]):
+                fb_link = FACEBOOK_PAGES["admission"]
+            elif any(word in query_lower for word in ["student affairs", "organization", "club", "activity"]):
+                fb_link = FACEBOOK_PAGES["student_affairs"]
+            elif any(word in query_lower for word in ["registrar", "transcript", "record", "credential"]):
+                fb_link = FACEBOOK_PAGES["registrar"]
+            elif any(word in query_lower for word in ["library", "book", "borrow"]):
+                fb_link = FACEBOOK_PAGES["library"]
+            elif any(word in query_lower for word in ["guidance", "counseling", "mental health", "stress", "tired", "help", "advice", "personal problem"]):
+                fb_link = FACEBOOK_PAGES["guidance"]
+                
+            # Only add Facebook link to relatively long responses (indicates it found information)
+            if len(response) > 100 and not "i don't have that information" in response_lower:
+                response += f"\n\nFor more information and updates, please visit the relevant USTP Facebook page: {fb_link}"
+            
+        # Only add a random usage tip to shorter or potentially unhelpful responses
+        if len(response) < 200 and "i don't have that information" in response_lower:
+            response += f"\n\n{random.choice(USAGE_TIPS)}"
             
         return response
     except Exception as e:
@@ -206,13 +383,14 @@ Format your answer in markdown with proper sections and bullet points where appr
         import traceback
         traceback.print_exc()
         
-        # Fallback to simple response
+        # Fallback to simple response with tip
+        tip = random.choice(USAGE_TIPS)
         if context_chunks:
-            return f"Based on the handbook: {context_chunks[0]}"
+            return f"Based on the handbook: {context_chunks[0]}\n\n{tip}"
         else:
-            return "I don't have information about that in the Student Handbook."
+            return f"I don't have information about that in the Student Handbook.\n\n{tip}"
 
-def get_response_from_query(query, top_k=5):
+def get_response_from_query(query, top_k=6):
     """Get response from the CSV data based on the query."""
     global csv_data, vectorizer, tfidf_matrix, content_column
     
@@ -232,8 +410,8 @@ def get_response_from_query(query, top_k=5):
         # Get the top K most similar documents
         top_indices = similarity_scores.argsort()[-top_k:][::-1]
         
-        # Check if we have relevant responses
-        if similarity_scores[top_indices[0]] < 0.05:
+        # Check if we have relevant responses - lower threshold for better recall
+        if similarity_scores[top_indices[0]] < 0.03:
             return "I don't have specific information about that in the Student Handbook. Can you please rephrase your question or ask about a different topic?"
         
         # Create context chunks for RAG
@@ -241,7 +419,7 @@ def get_response_from_query(query, top_k=5):
         section_info = []
         
         for idx in top_indices:
-            if similarity_scores[idx] > 0.05:  # Only include somewhat relevant results
+            if similarity_scores[idx] > 0.03:  # Only include somewhat relevant results
                 # Get content
                 content = str(csv_data.iloc[idx][content_column])
                 
@@ -309,7 +487,7 @@ def chat():
         success = load_csv_data()
         if not success:
             return jsonify({
-                'response': "I'm having trouble accessing my knowledge base. Please check the server logs."
+                'response': "⚠️ I'm having trouble accessing my knowledge base. Please check with your administrator or try again later."
             }), 500
     
     # Get user message
@@ -322,7 +500,14 @@ def chat():
     try:
         start_time = time.time()
         
-        # Get response
+        # Check for special queries first
+        special_response = handle_special_queries(user_message)
+        if special_response:
+            return jsonify({
+                'response': special_response
+            })
+        
+        # Get response from handbook
         response = get_response_from_query(user_message)
         
         end_time = time.time()
@@ -338,7 +523,7 @@ def chat():
         traceback.print_exc()
         
         return jsonify({
-            'response': "I apologize, but I encountered an error processing your request. Please try again."
+            'response': "⚠️ I apologize, but I encountered an error processing your request. Please try again or contact technical support if the problem persists."
         }), 500
 
 @app.route('/api/health', methods=['GET'])

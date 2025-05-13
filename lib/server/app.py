@@ -263,7 +263,75 @@ If you're feeling overwhelmed, consider speaking with the Guidance and Counselin
 For more information, please visit: https://www.facebook.com/ustpgsucdo
 """
     
-    # Check for common FAQs
+    # WiFi related queries - Enhanced pattern matching
+    if "wifi" in query_lower or "password" in query_lower or "internet" in query_lower or "connection" in query_lower or "network" in query_lower:
+        # Check for common WiFi question patterns
+        wifi_patterns = [
+            "what is the wifi", "what's the wifi", "wifi password", "password for wifi", 
+            "connect to wifi", "internet password", "ustp wifi", "campus wifi",
+            "wifi access", "access the wifi", "where can i find the wifi",
+            "how do i get wifi", "how to connect", "how to access"
+        ]
+        if any(pattern in query_lower for pattern in wifi_patterns) or ("wifi" in query_lower and any(word in query_lower for word in ["what", "how", "where", "tell", "know", "get"])):
+            return COMMON_FAQS["wifi access"]
+    
+    # Enrollment related queries - Enhanced pattern matching
+    if any(word in query_lower for word in ["enrollment", "enroll", "register", "registration", "admit", "admission"]):
+        # Check for common enrollment question patterns
+        enrollment_patterns = [
+            "when is enrollment", "enrollment period", "enrollment date", "enrollment schedule",
+            "when can i enroll", "when does enrollment", "enrollment start", "start of enrollment",
+            "how to enroll", "process of enrollment", "enrollment process", "where to enroll",
+            "when is registration", "registration date", "registration period", "when can i register",
+            "when is the start of classes", "when do classes begin", "school start"
+        ]
+        if any(pattern in query_lower for pattern in enrollment_patterns) or (any(word in query_lower for word in ["enrollment", "enroll", "register", "registration"]) and any(word in query_lower for word in ["when", "how", "where", "date", "schedule", "time", "start"])):
+            return COMMON_FAQS["when is enrollment"]
+    
+    # Registrar location queries - Enhanced pattern matching
+    if "registrar" in query_lower:
+        # Check for common registrar location question patterns
+        registrar_patterns = [
+            "where is the registrar", "registrar's office", "registrar office", "registrar location",
+            "find the registrar", "registrar's location", "how to get to the registrar",
+            "where can i find the registrar", "looking for the registrar",
+            "tell me where the registrar", "where the registrar is", "registrar located",
+            "where to find registrar", "registrar office located", "where can i find registrar"
+        ]
+        if any(pattern in query_lower for pattern in registrar_patterns) or ("registrar" in query_lower and any(word in query_lower for word in ["where", "located", "location", "find", "office", "place", "building", "room"])):
+            return COMMON_FAQS["where is the registrar"]
+
+    # Library hours queries - Enhanced pattern matching
+    if "library" in query_lower:
+        # Check for common library hours question patterns
+        library_patterns = [
+            "library hours", "library schedule", "library timing", "when is the library",
+            "when does the library", "library open", "library close", "library time",
+            "what time is the library", "what are the library hours", "library operation",
+            "when can i go to the library", "is the library open", "library availability",
+            "the hours of the library", "tell me about library hours"
+        ]
+        if any(pattern in query_lower for pattern in library_patterns) or ("library" in query_lower and any(word in query_lower for word in ["when", "hour", "time", "open", "close", "schedule", "available"])):
+            return COMMON_FAQS["library hours"]
+    
+    # Lost and found queries - Enhanced pattern matching
+    if any(word in query_lower for word in ["lost", "found", "missing", "misplaced", "dropped"]):
+        # Check for common lost and found question patterns
+        lost_patterns = [
+            "lost and found", "lost something", "found something", "if i lost", "where to go if i lost",
+            "what if i found", "how to find lost", "where to report lost", "where to claim found",
+            "where to go for lost", "i lost my", "found a", "missing item", "misplaced my",
+            "someone lost", "where to find lost", "how to recover lost"
+        ]
+        if any(pattern in query_lower for pattern in lost_patterns) or (any(word in query_lower for word in ["lost", "found", "missing"]) and any(word in query_lower for word in ["where", "how", "what", "report", "item", "object", "belonging"])):
+            return COMMON_FAQS["lost and found"]
+    
+    # Add more exceptions for question keywords that might lead to misunderstanding
+    if "example" in query_lower or "like" in query_lower or "such as" in query_lower:
+        # Treat as a regular query, not a special one
+        pass
+    
+    # Standard key-in-query check as fallback
     for key, response in COMMON_FAQS.items():
         if key in query_lower:
             return response

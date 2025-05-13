@@ -326,6 +326,11 @@ For more information, please visit: https://www.facebook.com/ustpgsucdo
         if any(pattern in query_lower for pattern in lost_patterns) or (any(word in query_lower for word in ["lost", "found", "missing"]) and any(word in query_lower for word in ["where", "how", "what", "report", "item", "object", "belonging"])):
             return COMMON_FAQS["lost and found"]
     
+    # Add more exceptions for question keywords that might lead to misunderstanding
+    if "example" in query_lower or "like" in query_lower or "such as" in query_lower:
+        # Treat as a regular query, not a special one
+        pass
+    
     # Standard key-in-query check as fallback
     for key, response in COMMON_FAQS.items():
         if key in query_lower:
